@@ -2,3 +2,11 @@
 
 from pyspark import  SparkContext
 from pyspark.sql import HiveContext
+import pymongo
+from pymongo import MongoClient
+client = pymongo.MongoClient()
+
+db = client.staging
+venue = client.venues
+for v in venue.find():
+  print v['name']
