@@ -5,7 +5,7 @@ import pymongo
 from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
-
+db.venues.drop()
 
 current_date = time.strftime('%Y%m%d')
 client_id= "JZUIY4ACNQZ4WYZRSLTDQSMXGVK5NCBCT2JEP1GTXY1TVSMF"
