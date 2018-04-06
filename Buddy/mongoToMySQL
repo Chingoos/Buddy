@@ -1,7 +1,3 @@
-#spark-submit 
-
-from pyspark import  SparkContext
-from pyspark.sql import HiveContext
 import pymongo
 from pymongo import MongoClient
 client = pymongo.MongoClient()
