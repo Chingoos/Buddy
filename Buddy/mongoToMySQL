@@ -6,3 +6,4 @@ db = client.staging
 venue = client.venues
 for v in db.venue.find():
   print v['name']
+print "hello"
