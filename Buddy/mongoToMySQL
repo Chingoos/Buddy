@@ -3,6 +3,8 @@ from pymongo import MongoClient
 client = pymongo.MongoClient()
 
 db = client.staging
+db = client['...']
 venue = client.venues
+venue = db["..."]
 for v in venue.find():
   print v['name']
