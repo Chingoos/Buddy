@@ -46,5 +46,5 @@ def addToList(east,west,south,north):
                 db.venues.insert(i)
 
 addToList(e,w,s,n)
-print "count=" + str(count)
-print len(venues)
+print "count number of calls=" + str(count)
+print "total venues added" + str(len(venues))
