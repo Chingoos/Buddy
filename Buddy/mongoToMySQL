@@ -1,8 +1,23 @@
 import pymongo
 from pymongo import MongoClient
+import MySQLdb
+
+conn = MySQLdb.connect(host= "buddystaging.cfvxqjolxisb.us-west-2.rds.amazonaws.com",user="Buddy",passwd="dogdogjim123",db="staging")
+x = conn.cursor()
+
+
+
+
 client = pymongo.MongoClient()
 
 db = client.staging
+
+x.execute("""DROP TABLE IF EXISTS staging.venue""")
+x.execute("""CREATE TABLE staging.venue (venue_id INT PRIMARY_KEY AUTO_INCREMENT NOT NULL, name VARCHAR(50), address VARCHAR(50), city VARCHAR(20), state VARCHAR(20))""")
+  
 for v in db.venues.find():
+  x.execute("""INSERT INTO staging.venue(name, adress, city, state) VALUES (%s, %s, %s, %s)""", (v['name'], v['location']['address'], v['location']['city'], v['location']['state']))
   print v['name']
-print "hello"
+  
+conn.commit()
+conn.close()
