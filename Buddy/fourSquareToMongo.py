@@ -1,6 +1,7 @@
 import urllib2
 import json
 import time
+import pymongo
 from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
