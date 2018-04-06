@@ -4,5 +4,5 @@ client = pymongo.MongoClient()
 
 db = client.staging
 venue = client.venues
-for v in venue.find():
+for v in db.venue.find():
   print v['name']
