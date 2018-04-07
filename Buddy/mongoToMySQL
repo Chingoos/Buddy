@@ -17,9 +17,9 @@ x.execute("""CREATE TABLE venue (venue_id INT PRIMARY KEY AUTO_INCREMENT NOT NUL
 name VARCHAR(50), address VARCHAR(50), city VARCHAR(20), state VARCHAR(20)) CHARACTER SET = utf8""")
   
 for v in db.venues.find():
-  if v['location'].get('address') IS NOT NONE:
+  if v['location'].get('address','NULL') != 'NULL':
     x.execute("""INSERT INTO venue(name, address, city, state) VALUES (%s, %s, %s, %s)""", (v['name'], v['location']['address'], v['location']['city'], v['location']['state']))
-  elif v['location'].get('city') IS NOT NONE:
+  elif v['location'].get('city','NULL') != 'NULL':
     x.execute("""INSERT INTO venue(name, address, city, state) VALUES (%s, %s, %s, %s)""", (v['name'], '', v['location']['city'], v['location']['state']))
   else:
     print v['name']
