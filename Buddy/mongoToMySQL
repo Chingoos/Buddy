@@ -18,7 +18,8 @@ name VARCHAR(100), category VARCHAR(50), verified VARCHAR(10) , address VARCHAR(
   
 for v in db.venues.find():
   if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL')  and (v.get('categories','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories']['shortName'], v['location']['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    if (v['categories'].get('name','NULL') != 'NULL'
+      x.execute("""INSERT INTO venue(name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories']['shortName'], v['location']['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
     x.execute("""INSERT INTO venue(name, verified, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['verified'],  v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('state','NULL') != 'NULL'):
