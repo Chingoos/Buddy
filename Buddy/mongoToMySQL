@@ -12,12 +12,13 @@ client = pymongo.MongoClient()
 
 db = client.staging
 
-x.execute("""DROP TABLE IF EXISTS staging.venue""")
-x.execute("""CREATE TABLE staging.venue (venue_id INT PRIMARY_KEY AUTO_INCREMENT NOT NULL, name VARCHAR(50), address VARCHAR(50), city VARCHAR(20), state VARCHAR(20))""")
+x.execute("""DROP TABLE IF EXISTS venue""")
+x.execute("""CREATE TABLE venue (venue_id INT PRIMARY_KEY AUTO_INCREMENT NOT NULL, 
+name VARCHAR(50), address VARCHAR(50), city VARCHAR(20), state VARCHAR(20))""")
   
 for v in db.venues.find():
   try:
-    x.execute("""INSERT INTO staging.venue(name, adress, city, state) VALUES (%s, %s, %s, %s)""", (v['name'], v['location']['address'], v['location']['city'], v['location']['state']))
+    x.execute("""INSERT INTO venue(name, adress, city, state) VALUES (%s, %s, %s, %s)""", (v['name'], v['location']['address'], v['location']['city'], v['location']['state']))
   except:
     print v['name']
   
