@@ -18,11 +18,11 @@ name VARCHAR(100), category VARCHAR(50), verified BOOLEAN, address VARCHAR(100),
   
 for v in db.venues.find():
   if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['verified'], v['categories']['shortName'], v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories']['shortName'], v['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, category, verified, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['verified'], v['categories']['shortName'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, category, verified, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories']['shortName'], v['verified'],  v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, category, verified, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['verified'], v['categories']['shortName'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, category, verified, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'),  v['categories']['shortName'], v['verified'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   else:
     print v['name']
   
