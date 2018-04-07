@@ -17,7 +17,7 @@ x.execute("""CREATE TABLE venue (venue_id INT PRIMARY KEY AUTO_INCREMENT NOT NUL
 name VARCHAR(100), category VARCHAR(50), verified VARCHAR(10) , address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), latitude FLOAT(30,20), longitude FLOAT(30,20)) CHARACTER SET = utf8""")
   
 for v in db.venues.find():
-  if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
+  if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'  and (v['categories'].get('shortName','NULL') != 'NULL'):
     x.execute("""INSERT INTO venue(name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories']['shortName'], v['location']['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
     x.execute("""INSERT INTO venue(name, verified, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['verified'],  v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
