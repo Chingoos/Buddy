@@ -13,7 +13,7 @@ client = pymongo.MongoClient()
 db = client.staging
 
 x.execute("""DROP TABLE IF EXISTS venue""")
-x.execute("""CREATE TABLE venue (venue_id INT PRIMARY_KEY AUTO_INCREMENT NOT NULL, 
+x.execute("""CREATE TABLE venue (venue_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
 name VARCHAR(50), address VARCHAR(50), city VARCHAR(20), state VARCHAR(20))""")
   
 for v in db.venues.find():
