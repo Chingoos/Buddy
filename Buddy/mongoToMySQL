@@ -14,7 +14,7 @@ db = client.staging
 
 x.execute("""DROP TABLE IF EXISTS venue""")
 x.execute("""CREATE TABLE venue (venue_id INT PRIMARY KEY AUTO_INCREMENT NOT NULL, 
-name VARCHAR(100), category VARCHAR(50), verified BOOLEAN, address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), latitude FLOAT(30,20), longitude FLOAT(30,20)) CHARACTER SET = utf8""")
+name VARCHAR(100), category VARCHAR(50), verified VARCHAR(10) , address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), latitude FLOAT(30,20), longitude FLOAT(30,20)) CHARACTER SET = utf8""")
   
 for v in db.venues.find():
   if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
