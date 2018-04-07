@@ -18,11 +18,11 @@ name VARCHAR(100), address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), l
   
 for v in db.venues.find():
   if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, address, city, state, latitude, longtitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, city, state, latitude, longtitude) VALUES (%s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(name, state, latitude, longtitude) VALUES (%s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(name, state, latitude, longitude) VALUES (%s, %s, %s, %s)""", (v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['state'], v['location']['lat'], v['location']['lng']))
   else:
     print v['name']
   
