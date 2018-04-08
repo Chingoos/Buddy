@@ -22,7 +22,7 @@ w=-122.38
 
 venues = []
 count = 0
-
+firstCounter = 0
 
 
 def addToList(east,west,south,north):
@@ -33,11 +33,12 @@ def addToList(east,west,south,north):
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if len(data['response']['venues'])<=15:
+    if (len(data['response']['venues'])==50) or firstCounter == 0:
         addToList(east,(west+east)/2,(south+north)/2,north)
         addToList((east+west)/2,west,(south+north)/2,north)
         addToList((east+west)/2,west,south,(south+north)/2)
         addToList(east,(east+west)/2,south,(south+north)/2)
+        firstCounter+=1
     else:
         for i in data['response']['venues']:
             nameAddress = [i['name'].encode('ascii', 'ignore').decode('ascii'), i['location']['lat']]
