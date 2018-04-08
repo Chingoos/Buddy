@@ -33,7 +33,7 @@ def addToList(east,west,south,north):
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if (len(data['response']['venues'])==50) or firstCounter == 0:
+    if (len(data['response']['venues'])==50) or (firstCounter) == 0:
         addToList(east,(west+east)/2,(south+north)/2,north)
         addToList((east+west)/2,west,(south+north)/2,north)
         addToList((east+west)/2,west,south,(south+north)/2)
