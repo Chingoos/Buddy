@@ -27,6 +27,7 @@ firstCounter = 0
 
 def addToList(east,west,south,north):
     global count
+    global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
     url = "https://api.foursquare.com/v2/venues/search?sw="+southWest+"&ne="+northEast+"&categoryId="+categoryId+"&client_id="+client_id+"&intent=browse&limit=50&client_secret="+client_secret+"&v="+current_date
