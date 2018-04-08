@@ -7,7 +7,7 @@ from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
 db.venues.drop()
-sys.setrecursionlimit(3000)
+sys.setrecursionlimit(1000)
 current_date = time.strftime('%Y%m%d')
 client_id= "JZUIY4ACNQZ4WYZRSLTDQSMXGVK5NCBCT2JEP1GTXY1TVSMF"
 client_secret = "RJA1XMUUCC4RP21CAQJREG3YOTNY4PTE2NEKUWR0GVVTLZPY"
@@ -36,12 +36,14 @@ def addToList(east,west,south,north):
     obj = urllib2.urlopen(url)
     data=json.load(obj)
     if (len(data['response']['venues'])==50) or (firstCounter == 0):
+        firstCounter+=1
+        print (firstCounter)
         addToList(east,(west+east)/2,(south+north)/2,north)
         addToList((east+west)/2,west,(south+north)/2,north)
         addToList((east+west)/2,west,south,(south+north)/2)
         addToList(east,(east+west)/2,south,(south+north)/2)
-        firstCounter+=1
-        print(firstCounter)
+        
+        
     else:
         for i in data['response']['venues']:
             nameAddress = [i['name'].encode('ascii', 'ignore').decode('ascii'), i['location']['lat']]
