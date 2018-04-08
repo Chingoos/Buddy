@@ -13,15 +13,15 @@ client = pymongo.MongoClient()
 db = client.staging
 
 x.execute("""DROP TABLE IF EXISTS venue""")
-x.execute("""CREATE TABLE venue (venue_id VARCHAR(50) NOT NULL, name VARCHAR(100) NOT NULL, category VARCHAR(50), verified VARCHAR(10) , address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), latitude FLOAT(30,20), longitude FLOAT(30,20)) CHARACTER SET = utf8""")
+x.execute("""CREATE TABLE venue (venue_id VARCHAR(50) NOT NULL, name VARCHAR(100) NOT NULL, category VARCHAR(50), verified VARCHAR(10) , address VARCHAR(100), city VARCHAR(100), state VARCHAR(20), zip_code VARCHAR(5), tipCount INT, userCount INT, checkinsCount INT, latitude FLOAT(30,20), longitude FLOAT(30,20), as_of_date DATE) CHARACTER SET = utf8""")
   
 for v in db.venues.find():
   if (v['location'].get('address','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL')  and (v.get('categories','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(venue_id, name, category, verified, address, city, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(venue_id, name, category, verified, address, city, state, zip_code, tipCount, userCount, checkinsCount, latitude, longitude, as_of_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'],  v['location']['address'], v['location']['city'], v['location']['state'], v['location]['postalCode'], v['stats']['tipCount'], v['stats']['userCount'], v['stats']['checkinsCount'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('city','NULL') != 'NULL') and (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(venue_id, name, category, verified, city, state, latitude, longitude) VALUES (%s, %s, %s,%s, %s, %s, %s, %s)""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'],  v['location']['city'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(venue_id, name, category, verified, city, state, zip_code, tipCount, userCount, checkinsCount,latitude, longitude, as_of_date) VALUES (%s, %s, %s,%s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'],  v['location']['city'], v['location']['state'], v['location]['postalCode'], v['stats']['tipCount'], v['stats']['userCount'], v['stats']['checkinsCount'], v['location']['lat'], v['location']['lng']))
   elif (v['location'].get('state','NULL') != 'NULL'):
-    x.execute("""INSERT INTO venue(venue_id, name,  category, verified, state, latitude, longitude) VALUES (%s, %s, %s, %s, %s, %s, %s)""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'], v['location']['state'], v['location']['lat'], v['location']['lng']))
+    x.execute("""INSERT INTO venue(venue_id, name,  category, verified, state, zip_code, tipCount, userCount, checkinsCount, latitude, longitude as_of_date) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, NOW())""", (v['id'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['categories'][0]['name'], v['verified'], v['location']['state'], v['location]['postalCode'], v['stats']['tipCount'], v['stats']['userCount'], v['stats']['checkinsCount'], v['location']['lat'], v['location']['lng']))
   else:
     print v['name']
   
