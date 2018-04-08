@@ -41,6 +41,7 @@ def addToList(east,west,south,north):
         addToList((east+west)/2,west,south,(south+north)/2)
         addToList(east,(east+west)/2,south,(south+north)/2)
         firstCounter+=1
+        print(firstCounter)
     else:
         for i in data['response']['venues']:
             nameAddress = [i['name'].encode('ascii', 'ignore').decode('ascii'), i['location']['lat']]
