@@ -2,11 +2,12 @@ import urllib2
 import json
 import time
 import pymongo
+import sys
 from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
 db.venues.drop()
-
+sys.setrecursionlimit(3000)
 current_date = time.strftime('%Y%m%d')
 client_id= "JZUIY4ACNQZ4WYZRSLTDQSMXGVK5NCBCT2JEP1GTXY1TVSMF"
 client_secret = "RJA1XMUUCC4RP21CAQJREG3YOTNY4PTE2NEKUWR0GVVTLZPY"
