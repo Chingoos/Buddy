@@ -7,7 +7,7 @@ from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
 db.venues.drop()
-sys.setrecursionlimit(1000)
+sys.setrecursionlimit(5000)
 current_date = time.strftime('%Y%m%d')
 client_id= "JZUIY4ACNQZ4WYZRSLTDQSMXGVK5NCBCT2JEP1GTXY1TVSMF"
 client_secret = "RJA1XMUUCC4RP21CAQJREG3YOTNY4PTE2NEKUWR0GVVTLZPY"
@@ -15,10 +15,10 @@ city = "SF"
 latitude = "37.722046"
 longitude = "-122.45329"
 categoryId = "4d4b7105d754a06374d81259"
-n=38.0
-e=-121.8
-s=37.18
-w=-122.49
+n=38.726
+e=-121.215
+s=36.547
+w=-122.43
 
 
 venues = []
