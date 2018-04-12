@@ -19,13 +19,13 @@ for v in db.places_detail.find():
   x.execute("""INSERT INTO places_test(place_id, name, latitude, longitude, as_of_date) VALUES (%s,%s, %s, %s, NOW())""", (v['placeId'], v['name'], v['location']['position'][0], v['location']['position'][1]))
   if (v['location'].get('address', 'Null') != 'Null'):
     if (v['location']['address'].get('house','Null') != 'Null') and (v['location']['address'].get('street','Null') != 'Null'):
-      x.execute("""UPDATE places_test SET address = %s WHERE place_id = %s)""", (v['location']['address']['house'] + v['location']['address']['street'], v['placeId']))
+      x.execute("""UPDATE places_test SET address = %s WHERE place_id = %s""", (v['location']['address']['house'] + v['location']['address']['street'], v['placeId']))
       if v['location']['address'].get('postalCode','Null') != 'Null':
-        x.execute("""UPDATE places_test SET zip_code = %s WHERE place_id = %s)""", (v['location']['address']['postalCode'], v['placeId']))
+        x.execute("""UPDATE places_test SET zip_code = %s WHERE place_id = %s""", (v['location']['address']['postalCode'], v['placeId']))
         if v['location']['address'].get('city','Null') != 'Null':
-          x.execute("""UPDATE places_test SET city = %s WHERE place_id = %s)""", (v['location']['address']['city'], v['placeId']))
+          x.execute("""UPDATE places_test SET city = %s WHERE place_id = %s""", (v['location']['address']['city'], v['placeId']))
           if v['location']['address'].get('district','Null') != 'Null':
-            x.execute("""UPDATE places_test SET state = %s WHERE place_id = %s)""", (v['location']['address']['state'], v['placeId']))
+            x.execute("""UPDATE places_test SET state = %s WHERE place_id = %s""", (v['location']['address']['state'], v['placeId']))
           else:
             print("NO DISTRICT" + v['name'])
         else:
