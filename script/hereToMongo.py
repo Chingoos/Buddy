@@ -33,15 +33,19 @@ def addToList(east,west,south,north):
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if (len(data['results']['items'])>=50) or (firstCounter == 0):
+    if (len(data['results']['items'])>=20) or (firstCounter == 0):
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         firstCounter+=1
         print (firstCounter)
-        addToList(east,(west+east)/2,(south+north)/2,north)
-        addToList((east+west)/2,west,(south+north)/2,north)
-        addToList((east+west)/2,west,south,(south+north)/2)
-        addToList(east,(east+west)/2,south,(south+north)/2)
-        
+        addToList((west+east)/3,west,(south+north)*2/3,north)
+        addToList((west+east)*2/3,(west+east)/3,(south+north)*2/3,north)
+        addToList(east,(west+east)*2/3,(south+north)*2/3,north)
+        addToList((west+east)/3,west,(south+north)/3,(south+north)*2/3)
+        addToList((west+east)*2/3,(west+east)/3,(south+north)/3,(south+north)*2/3)
+        addToList(east,(west+east)*2/3,(south+north)/3,(south+north)*2/3)
+        addToList((west+east)/3,west,south,(south+north)/3)
+        addToList((west+east)*2/3,south,(south+north)/3)
+        addToList(east,(west+east)*2/3,south,(south+north)/3)
         
     else:
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
