@@ -19,7 +19,7 @@ for v in db.places_detail.find():
   try:
     x.execute("""INSERT INTO places_test(place_id, name, address, city, state, zip_code, country, district,  latitude, longitude, as_of_date) VALUES (%s, %s, %s, %s, NOW())""", (v['placeId'], v['name'], (v['location']['address']['house'] + v['location']['address']['street'], v['location']['address']['city'],  v['location']['address']['state'],  v['location']['address']['postalCode'],  v['location']['address']['country'],  v['location']['address']['district'], v['location']['position'][0], v['location']['position'][1]))
   except:
-    print v['title']
+    print v['name']
 
   
 conn.commit()
