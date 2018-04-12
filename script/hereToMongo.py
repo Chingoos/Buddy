@@ -30,7 +30,8 @@ def addToList(east,west,south,north):
     global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
-    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(west)+","+str(south)+","+str(east)+","+str(north)+"&cat="+categoryId+"&size=100&drilldown=true&show_refs=opentable,yelp,tripadvisor,facebook"
+    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(round(west,5))+","+str(round(south,5))+","+str(round(east,5))+","+str(round(north,5))+"&cat="+categoryId+"&size=100&drilldown=true&show_refs=opentable,yelp,tripadvisor,facebook"
+    print("west"+str(round(west,5))+"south"+str(round(south,5))+"east"+str(round(east,5))+"north"+str(round(north,5)))
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
