@@ -33,7 +33,8 @@ def addToList(east,west,south,north):
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if (len(data['results']['items'])==50) or (firstCounter == 0):
+    if (len(data['results']['items'])>=50) or (firstCounter == 0):
+        print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         firstCounter+=1
         print (firstCounter)
         addToList(east,(west+east)/2,(south+north)/2,north)
@@ -43,6 +44,7 @@ def addToList(east,west,south,north):
         
         
     else:
+        print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         for i in data['results']['items']:
             nameAddress = [i['title'].encode('ascii', 'ignore').decode('ascii'), i['position']]
             if nameAddress not in places:
