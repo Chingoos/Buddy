@@ -33,7 +33,7 @@ def addToList(east,west,south,north):
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if (len(data['results']['items'])>=100) or (firstCounter == 0):
+    if (len(data['results']['items'])>=101) or (firstCounter == 0):
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         firstCounter+=1
         print (firstCounter)
