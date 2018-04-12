@@ -20,6 +20,11 @@ for v in db.places.find():
     x.execute("""INSERT INTO places_test(place_id, name, latitude, longitude, as_of_date) VALUES (%s, %s, %s, %s, NOW())""", (v['id'], v['title'], v['position'][0], v['position'][1]))
   except:
     print v['title']
+for v in db.places_detail.find():
+  try:
+    x.execute("""UPDATE places_test SET address = %s, city = %s, state = %s, zip_code = %s, country = %s, district = %s WHERE place_id = %s """, (v['location']['address']['house'] + v['location']['address']['street'], v['location']['address']['city'],  v['location']['address']['state'],  v['location']['address']['postalCode'],  v['location']['address']['country'],  v['location']['address']['district'],  v['placeId'] ))
+  except:
+    print v['name']
   
 conn.commit()
 conn.close()
