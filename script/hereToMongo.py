@@ -10,8 +10,8 @@ db.places.drop()
 db.places_detail.drop()
 sys.setrecursionlimit(5000)
 current_date = time.strftime('%Y%m%d')
-app_id= "3FfCo1NGjLGCVbbvhemM"
-app_code = "sW7ZTnFFJLiYlqRTxzKOjA"
+app_id= "FKQUy8ihG2cJTLDAmn01"
+app_code = "knOkVBEoB0DIdFMnPzdTeg"
 latitude = "37.722046"
 longitude = "-122.45329"
 categoryId = "eat-drink"
