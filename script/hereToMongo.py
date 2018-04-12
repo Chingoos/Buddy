@@ -24,13 +24,12 @@ places = []
 count = 0
 firstCounter = 0
 
-
 def addToList(east,west,south,north):
     global count
     global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
-    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in=52.521,13.3807;r=2000"+"&cat="+categoryId
+    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
@@ -45,7 +44,7 @@ def addToList(east,west,south,north):
         
     else:
         for i in data['results']['items']:
-            nameAddress = [i['title'].encode('ascii', 'ignore').decode('ascii'), i['location']['lat']]
+            nameAddress = [i['title'].encode('ascii', 'ignore').decode('ascii'), i['position']]
             if nameAddress not in places:
                 places.append(nameAddress)
                 db.places.insert(i)
