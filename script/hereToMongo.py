@@ -7,6 +7,7 @@ from pymongo import MongoClient
 client = pymongo.MongoClient()
 db=client.staging
 db.places.drop()
+db.places_detail.drop()
 sys.setrecursionlimit(5000)
 current_date = time.strftime('%Y%m%d')
 app_id= "3FfCo1NGjLGCVbbvhemM"
@@ -39,15 +40,10 @@ def addToList(east,west,south,north):
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         firstCounter+=1
         print (firstCounter)
-        addToList(west+((east-west)/3),west,south+((north-south)*2/3),north)
-        addToList(west+((east-west)*2/3),west+((east-west)/3),south+((north-south)*2/3),north)
-        addToList(east,west+((east-west)*2/3),south+((north-south)*2/3),north)
-        addToList(west+((east-west)/3),west,south+((north-south)/3),south+((north-south)*2/3))
-        addToList(west+((east-west)*2/3),west+((east-west)/3),south+((north-south)/3),south+((north-south)*2/3))
-        addToList(east,west+((east-west)*2/3),south+((north-south)/3),south+((north-south)*2/3))
-        addToList(west+((east-west)/3),west,south,south+((north-south)/3))
-        addToList(west+((east-west)*2/3),west+((east-west)/3),south,south+((north-south)/3))
-        addToList(east,west+((east-west)*2/3),south,south+((north-south)/3))
+        addToList(east,(west+east)/2,(south+north)/2,north)
+        addToList((east+west)/2,west,(south+north)/2,north)
+        addToList((east+west)/2,west,south,(south+north)/2)
+        addToList(east,(east+west)/2,south,(south+north)/2)
         
     else:
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
