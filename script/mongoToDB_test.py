@@ -33,7 +33,7 @@ for v in db.places_detail.find():
   if v.get('contacts','Null') != 'Null':
     if v['contacts'].get('phone','Null') != 'Null':
       if v['contacts']['phone'][0].get('value','Null') != 'Null':
-        x.execute("""UPDATE places_test SET district = %s WHERE place_id = %s""", (v['contacts']['phone'][0]['value'], v['placeId']))
+        x.execute("""UPDATE places_test SET phone_number = %s WHERE place_id = %s""", (v['contacts']['phone'][0]['value'], v['placeId']))
   else:
     print(v['name'])
 
