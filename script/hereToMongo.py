@@ -14,10 +14,10 @@ app_code = "sW7ZTnFFJLiYlqRTxzKOjA"
 latitude = "37.722046"
 longitude = "-122.45329"
 categoryId = "eat-drink"
-n=38.726
-e=-121.038
-s=36.547
-w=-122.7
+n=37.808
+e=-122.3663
+s=37.657841
+w=-122.495495
 
 
 places = []
