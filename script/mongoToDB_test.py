@@ -17,7 +17,7 @@ x.execute("""CREATE TABLE places_test (place_id VARCHAR(50) NOT NULL, name VARCH
   
 for v in db.places.find():
   try:
-    x.execute("""INSERT INTO places_test(place_id, name, latitude, longitude, as_of_date) VALUES (%s, %s, %s, %s, NOW())""", (v['id'], v['title'], v['position'](0), v['position'](1)))
+    x.execute("""INSERT INTO places_test(place_id, name, latitude, longitude, as_of_date) VALUES (%s, %s, %s, %s, NOW())""", (v['id'], v['title'], v['position'][0], v['position'][1]))
   except:
     print v['title']
   
