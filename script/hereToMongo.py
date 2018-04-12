@@ -21,6 +21,7 @@ w=-122.7
 
 
 places = []
+places_detail = []
 count = 0
 firstCounter = 1
 
@@ -29,7 +30,7 @@ def addToList(east,west,south,north):
     global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
-    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId+"&size=100&drilldown=true&show_refs=yelp"
+    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId+"&size=100&drilldown=true&show_refs=yelp,tripadvisor,opentable&image_dimensions=w200"
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
@@ -54,7 +55,15 @@ def addToList(east,west,south,north):
             if nameAddress not in places:
                 places.append(nameAddress)
                 db.places.insert(i)
-  
+                addDetails(i['href'])
+def addDetails(link):
+    url = link
+    obj=urllib2.urlopen(url)
+    data=json.load(obj)
+    name = data['name']
+    places_detail.append(name)
+    db.places_detail.insert(data)
 addToList(e,w,s,n)
 print "count number of calls=" + str(count)
 print "total places added" + str(len(places))
+print "total places_details added" + str(len(places_detail))
