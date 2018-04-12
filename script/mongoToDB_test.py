@@ -21,7 +21,7 @@ for v in db.places_detail.find():
     if (v['location']['address'].get('house','Null') != 'Null') and (v['location']['address'].get('street','Null') != 'Null'):
       x.execute("""UPDATE places_test SET address = %s WHERE place_id = %s)""", (v['location']['address']['house'] + v['location']['address']['street'], v['placeId']))
       if v['location']['address'].get('postalCode','Null') != 'Null':
-         x.execute("""UPDATE places_test SET zip_code = %s WHERE place_id = %s)""", (v['location']['address']['postalCode'], v['placeId']))
+        x.execute("""UPDATE places_test SET zip_code = %s WHERE place_id = %s)""", (v['location']['address']['postalCode'], v['placeId']))
         if v['location']['address'].get('city','Null') != 'Null':
           x.execute("""UPDATE places_test SET city = %s WHERE place_id = %s)""", (v['location']['address']['city'], v['placeId']))
           if v['location']['address'].get('district','Null') != 'Null':
