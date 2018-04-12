@@ -32,7 +32,7 @@ for v in db.places_detail.find():
       x.execute("""UPDATE places_test SET country = %s WHERE place_id = %s""", (v['location']['address']['country'], v['placeId']))
   if v.get('contacts','Null') != 'Null':
     if v['contacts'].get('phone','Null') != 'Null':
-      if v['contacts']['phone'].get('value','Null') != 'Null':
+      if v['contacts']['phone'][0].get('value','Null') != 'Null':
         x.execute("""UPDATE places_test SET district = %s WHERE place_id = %s""", (v['contacts']['phone']['value'], v['placeId']))
   else:
     print(v['name'])
