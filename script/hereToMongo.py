@@ -23,7 +23,7 @@ w=-122.7
 places = []
 places_detail = []
 count = 0
-firstCounter = 1
+firstCounter = 0
 
 def addToList(east,west,south,north):
     global count
