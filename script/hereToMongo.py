@@ -22,18 +22,18 @@ w=-122.7
 
 places = []
 count = 0
-firstCounter = 0
+firstCounter = 1
 
 def addToList(east,west,south,north):
     global count
     global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
-    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId
+    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId+"&size=100"
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
-    if (len(data['results']['items'])>=20) or (firstCounter == 0):
+    if (len(data['results']['items'])>=101) or (firstCounter == 0):
         print("HOW MANY RETURNED" + str(len(data['results']['items'])))
         firstCounter+=1
         print (firstCounter)
