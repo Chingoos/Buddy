@@ -30,7 +30,7 @@ def addToList(east,west,south,north):
     global firstCounter
     southWest = str(south)+","+str(west)
     northEast = str(north)+","+str(east)
-    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&bbox="+str(w)+","+str(s)+","+str(e)+","+str(n)+"&cat="+categoryId
+    url = "https://places.cit.api.here.com/places/v1/browse?app_id="+app_id+"&app_code="+app_code+"&in=52.521,13.3807;r=2000"+"&cat="+categoryId
     count+=1
     obj = urllib2.urlopen(url)
     data=json.load(obj)
