@@ -49,8 +49,6 @@ for v in db.places_detail.find():
       if v['media']['images'].get('items', 'Null') != 'Null':
         for i in v['media']['images']['items']:
           x.execute("""INSERT INTO places_images(place_id, image_src, image_id) VALUES (%s, %s, %s) """, (v['placeId'], i['src'], i['id']))
-
-for 
   
 conn.commit()
 conn.close()
