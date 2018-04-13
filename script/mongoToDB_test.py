@@ -18,6 +18,8 @@ x.execute("""DROP TABLE IF EXISTS places_category""")
 x.execute("""CREATE TABLE places_category (place_id VARCHAR(50) NOT NULL, category VARCHAR(50) NOT NULL, category_id VARCHAR(50) NOT NULL)""")
 x.execute("""DROP TABLE IF EXISTS places_image""")
 x.execute("""CREATE TABLE places_images (place_id VARCHAR(50) NOT NULL, image_src VARCHAR(200), image_id VARCHAR(50))""")
+x.execute("""DROP TABLE IF EXISTS places_restaurant_category""")
+x.execute("""CREATE TABLE places_restaurant_category (place_id VARCHAR(50) NOT NULL, category VARCHAR(200), category_id VARCHAR(50))""")
 for v in db.places_detail.find():
   x.execute("""INSERT INTO places_test(place_id, name, latitude, longitude, as_of_date) VALUES (%s,%s, %s, %s, NOW())""", (v['placeId'], v['name'].encode('ascii', 'ignore').decode('ascii'), v['location']['position'][0], v['location']['position'][1]))
   if (v['location'].get('address', 'Null') != 'Null'):
@@ -49,6 +51,8 @@ for v in db.places_detail.find():
       if v['media']['images'].get('items', 'Null') != 'Null':
         for i in v['media']['images']['items']:
           x.execute("""INSERT INTO places_images(place_id, image_src, image_id) VALUES (%s, %s, %s) """, (v['placeId'], i['src'], i['id']))
-  
+  if v.get('tags', 'Null') != 'Null':
+    for t in v['tags']:
+      x.execute("""INSERT INTO places_restaurant_category(place_id, category, category_id) VALUES (%s, %s, %s)""", (v['placeId'], t['title'], t['id']))
 conn.commit()
 conn.close()
