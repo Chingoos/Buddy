@@ -5,9 +5,6 @@ import MySQLdb
 conn = MySQLdb.connect(host= "buddystaging.cfvxqjolxisb.us-west-2.rds.amazonaws.com",user="Buddy",passwd="dogdogjim123",db="staging")
 x = conn.cursor()
 
-
-
-
 client = pymongo.MongoClient()
 
 db = client.staging
@@ -54,5 +51,8 @@ for v in db.places_detail.find():
   if v.get('tags', 'Null') != 'Null':
     for t in v['tags']:
       x.execute("""INSERT INTO places_restaurant_category(place_id, category, category_id) VALUES (%s, %s, %s)""", (v['placeId'], t['title'], t['id']))
+      
+##category list
+
 conn.commit()
 conn.close()
