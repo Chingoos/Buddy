@@ -4,7 +4,7 @@ import {
 } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Search, Home } from './screens';
+import { Search, Home, Profile } from './screens';
 
 const Stack = createStackNavigator({
   Search: {
@@ -13,12 +13,16 @@ const Stack = createStackNavigator({
   Home: {
     screen: Home,
   },
+  Profile: {
+    screen: Profile,
+  },
 });
 
 export default createMaterialBottomTabNavigator(
   {
     Home: { screen: Home },
     Search: { screen: Search },
+    Profile: { screen: Profile },
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -29,6 +33,8 @@ export default createMaterialBottomTabNavigator(
           iconName = `ios-home`;
         } else if (routeName === 'Search') {
           iconName = `ios-search`;
+        } else if (routeName === 'Profile') {
+          iconName = `ios-person`;
         } else {
           iconName = `ios-ionic`;
         }
