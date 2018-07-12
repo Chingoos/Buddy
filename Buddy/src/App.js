@@ -3,7 +3,7 @@ import {
   createStackNavigator,
 } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { Search, Home, Profile } from './screens';
 
 const Stack = createStackNavigator({
@@ -16,6 +16,12 @@ const Stack = createStackNavigator({
   Profile: {
     screen: Profile,
   },
+  Profile2: {
+    screen: Profile,
+  },
+  Profile3: {
+    screen: Profile,
+  },
 });
 
 export default createMaterialBottomTabNavigator(
@@ -23,6 +29,8 @@ export default createMaterialBottomTabNavigator(
     Home: { screen: Home },
     Search: { screen: Search },
     Profile: { screen: Profile },
+    Profile2: { screen: Profile },
+    Profile3: { screen: Profile },
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -30,19 +38,20 @@ export default createMaterialBottomTabNavigator(
         const { routeName } = navigation.state;
         let iconName;
         if (routeName === 'Home') {
-          iconName = `ios-home`;
+          iconName = `ghost`;
         } else if (routeName === 'Search') {
-          iconName = `ios-search`;
+          iconName = `magnifier`;
         } else if (routeName === 'Profile') {
-          iconName = `ios-person`;
+          iconName = `user`;
         } else {
-          iconName = `ios-ionic`;
+          iconName = `emotsmile`;
         }
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Icon name={iconName} size={22.5} color={tintColor} />;
+        return <Icon name={iconName} size={25} color={tintColor} />;
       },
     }),
+    labeled: false,
     initialRouteName: 'Search',
     activeTintColor: 'black',
     inactiveTintColor: 'grey',

@@ -19,12 +19,15 @@ export default class Profile extends Component {
             <Avatar
               large
               rounded
-              title="JK"
+              overlayContainerStyle={{backgroundColor: 'white'}}
+              source={{
+                uri: 'http://icons.iconarchive.com/icons/icons8/halloween/256/ghost-2-icon.png',
+              }}
               />
           </View>
           <View>
-            <Text style={{ color: 'black', fontSize: 16, fontWeight: 'bold'}}>Restaurant History of JK</Text>
-            <Text style={{ color: 'black', fontSize: 16,}}>San Francisco CA US</Text>
+            <Text style={styles.fontBold}>Rookie</Text>
+            <Text style={styles.font}>Intro</Text>
           </View>
         </View>
         <Tabs
@@ -41,7 +44,7 @@ export default class Profile extends Component {
             heading={<TabHeading style={{ backgroundColor: colors.background }}><Icon name="notebook" size={30} style={{color: 'black'}} /></TabHeading>}>
           </Tab>
           <Tab
-            heading={<TabHeading style={{ backgroundColor: colors.background }}><Icon name="globe" size={30} style={{color: 'black'}} /></TabHeading>}>
+            heading={<TabHeading style={{ backgroundColor: colors.background }}><Icon name="camera" size={30} style={{color: 'black'}} /></TabHeading>}>
           </Tab>
         </Tabs>
       </ScrollView>
@@ -53,10 +56,10 @@ const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     flexDirection: 'row',
-    paddingBottom: 8,
+    paddingBottom: 2,
     paddingLeft: 15,
     paddingRight: 15,
-    paddingTop: 6,
+    paddingTop: 15,
   },
   header: {
   },
@@ -65,5 +68,17 @@ const styles = StyleSheet.create({
   },
   scroll: {
       backgroundColor: 'white',
+  },
+  font: {
+    //fontWeight: 'bold',
+    fontSize: 30,
+    color: 'black',
+    fontFamily: 'BentonSans Light'
+  },
+  fontBold: {
+    fontWeight: 'bold',
+    fontSize: 30,
+    color: 'black',
+    fontFamily: 'BentonSans Light'
   }
 });

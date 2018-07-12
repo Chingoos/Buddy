@@ -64,6 +64,13 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>BentonSans Regular.otf</string>
+		<string>Roboto_medium.ttf</string>
+		<string>Roboto.ttf</string>
+		<string>rubicon-icon-font.ttf</string>
+		<string>BentonSans Black.otf</string>
+		<string>BentonSans Light.otf</string>
+		<string>BentonSans Thin.otf</string>
 	</array>
 </dict>
 </plist>

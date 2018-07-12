@@ -7,31 +7,21 @@ import {
   TouchableHighlight,
   ImageBackground
 } from 'react-native';
-import {Container, Content, Button } from'native-base';
-import ToggleButton from '../components/ToggleButton'
-export default class Search extends Component {
-  constructor(props){
-    super(props);
-    this.state = {
-      paleo: false,
-      vegan: false,
-      vegetarian: false,
-    }
-  }
-  updateChoice(type) {
-    let newState = {...this.state};
-    newState[type] = !newState[type];
-    this.setState(newState);
-  }
+
+export default class ToggleButton extends Component {
+
   render() {
     return (
-      <ScrollView style ={styles.scroll}>
-        <ToggleButton label='BBQ' onPress={() => { this.updateChoice('vegan')  }} selected={this.state.vegan} />
-      </ScrollView>
+      <TouchableHighlight underlayColor='white' style={styles.bubblechoice} onPress={this.props.onPress}>
+        <ImageBackground style={styles.bubblechoice} source={{uri: 'http://icons.iconarchive.com/icons/icons8/halloween/256/ghost-2-icon.png'}}>
+          <View style={[styles.overlay, this.props.selected ? {backgroundColor: 'rgba(80,94,104,0)'} : {}]}>
+            <Text style={styles.choicetext}>{this.props.label}</Text>
+          </View>
+        </ImageBackground>
+      </TouchableHighlight>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
