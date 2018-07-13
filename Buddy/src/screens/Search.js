@@ -5,37 +5,168 @@ import {
   StyleSheet,
   ScrollView,
   TouchableHighlight,
-  ImageBackground
+  ImageBackground,
+  Button
 } from 'react-native';
-import {Container, Content, Button } from'native-base';
+import {Container, Content,  } from'native-base';
+import { Slider } from 'react-native-elements'
 import ToggleButton from '../components/ToggleButton'
+import FoodImages from '../assets/FoodImages';
+import Profile from './Profile'
 export default class Search extends Component {
   constructor(props){
     super(props);
     this.state = {
-      paleo: false,
-      vegan: false,
-      vegetarian: false,
-    }
+      chinese: false,
+      fastfood: false,
+      burger: false,
+      korean: false,
+      japanese: false,
+      price: 1,
+      distance:1,
+      priceString: "Moderate",
+      distanceString: "Moderate"
+    };
   }
   updateChoice(type) {
     let newState = {...this.state};
     newState[type] = !newState[type];
     this.setState(newState);
   }
+  updatePrice(price)
+  {
+    if (price == 0)
+    {
+      this.setState({
+           price : 0,
+           priceString: "Cheap"
+        })
+    }
+    else if(price  == 1)
+    {
+      this.setState({
+            price : 1,
+            priceString: "Moderate"
+        })
+    }
+    else if(price == 2)
+    {
+      this.setState({
+            price : 2,
+            priceString: "Expensive"
+        })
+    }
+    else
+    {
+      this.setState({
+            price : 3,
+            priceString: "Fancy"
+        })
+    }
+  }
+  updateDistance(distance)
+  {
+    if (distance == 0)
+    {
+      this.setState({
+           distance : 0,
+           distanceString: "Close"
+        })
+    }
+    else if(distance  == 1)
+    {
+      this.setState({
+            distance : 1,
+            distanceString: "Moderate"
+        })
+    }
+    else if(distance == 2)
+    {
+      this.setState({
+            distance : 2,
+            distanceString: "Far"
+        })
+    }
+    else
+    {
+      this.setState({
+            distance : 3,
+            distanceString: "Very Far"
+        })
+    }
+  }
   render() {
     return (
-      <ScrollView style ={styles.scroll}>
-        <ToggleButton label='BBQ' onPress={() => { this.updateChoice('vegan')  }} selected={this.state.vegan} />
-      </ScrollView>
+      <View style={{flex: 1}}>
+        <ScrollView style ={styles.scroll}>
+          <View style={styles.container}>
+            <ToggleButton label='Chinese' onPress={() => { this.updateChoice('chinese')  }} selected={this.state.chinese} source={FoodImages['Chinese']}/>
+            <ToggleButton label='Korean' onPress={() => { this.updateChoice('korean')  }} selected={this.state.korean} source={FoodImages['Korean']}/>
+            <ToggleButton label='Japanese' onPress={() => { this.updateChoice('japanese')  }} selected={this.state.japanese} source={FoodImages['Japanese']}/>
+            <ToggleButton label='Fast Food' onPress={() => { this.updateChoice('fastfood')  }} selected={this.state.fastfood} source={FoodImages['FastFood']}/>
+            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+          </View>
+          <View style={styles.container}>
+            <ToggleButton label='Chinese' onPress={() => { this.updateChoice('chinese')  }} selected={this.state.chinese} source={FoodImages['Chinese']}/>
+            <ToggleButton label='Korean' onPress={() => { this.updateChoice('korean')  }} selected={this.state.korean} source={FoodImages['Korean']}/>
+            <ToggleButton label='Japanese' onPress={() => { this.updateChoice('japanese')  }} selected={this.state.japanese} source={FoodImages['Japanese']}/>
+            <ToggleButton label='Fast Food' onPress={() => { this.updateChoice('fastfood')  }} selected={this.state.fastfood} source={FoodImages['FastFood']}/>
+            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+          </View>
+          <View style={styles.slider}>
+            <Slider
+              value={this.state.price}
+              minimumValue = {0}
+              maximumValue = {3}
+              step = {1}
+              onValueChange={(price) => this.updatePrice(price)} />
+            <Text> {this.state.priceString}</Text>
+          </View>
+          <View style={styles.slider}>
+            <Slider
+              value={this.state.distance}
+              minimumValue = {0}
+              maximumValue = {3}
+              step = {1}
+              onValueChange={(distance) => this.updateDistance(distance)} />
+            <Text>{this.state.distanceString}</Text>
+          </View>
+        </ScrollView>
+        <View style={styles.submitButton}>
+          <Button
+            //onPress={()}
+            title="Search!"
+            color="black"
+          />
+        </View>
+      </View>
     );
   }
+  onSubmitPressed() {
+        this.props.navigator.push({
+            screen: 'Profile',
+            passProps: {},
+            title: 'Profile',
+        });
+    }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
+    flexDirection: 'row',
+    paddingBottom: 15,
+    paddingLeft: 15,
+    paddingRight: 15,
+    paddingTop: 15,
+  },
+  slider: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    alignItems: 'stretch',
     justifyContent: 'center',
   },
   scroll: {
@@ -48,27 +179,10 @@ const styles = StyleSheet.create({
     fontFamily: 'BentonSans Light',
     margin: 6
   },
-  choicetext: {
-    alignItems: 'center',
-    alignSelf: 'center',
-    color: 'white',
-    marginTop: 35,
-    fontWeight: '600',
-    marginLeft: -18,
-    fontSize: 14,
-    flex: 1,
-    textAlign: 'center'
-  },
-  overlay: {
-    backgroundColor:'rgba(80,94,104,0.7)',
-    height: 100,
-    width: 100,
-    alignItems:'center'
-  },
-  bubblechoice: {
-   height: window.height/8.335,
-   borderRadius: (window.height/8.3350)/2,
-   marginRight: 2,
-   width: window.height/8.335,
- },
+  submitButton: {
+    position: 'absolute',
+    right: 0,
+    bottom:0,
+    left:0,
+}
 });

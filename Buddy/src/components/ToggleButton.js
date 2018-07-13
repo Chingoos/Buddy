@@ -12,9 +12,9 @@ export default class ToggleButton extends Component {
 
   render() {
     return (
-      <TouchableHighlight underlayColor='white' style={styles.bubblechoice} onPress={this.props.onPress}>
-        <ImageBackground style={styles.bubblechoice} source={{uri: 'http://icons.iconarchive.com/icons/icons8/halloween/256/ghost-2-icon.png'}}>
-          <View style={[styles.overlay, this.props.selected ? {backgroundColor: 'rgba(80,94,104,0)'} : {}]}>
+      <TouchableHighlight underlayColor='transparent' style={styles.bubblechoice} onPress={this.props.onPress}>
+        <ImageBackground style={styles.imageWrap} source={this.props.source}>
+          <View style={[styles.overlay, this.props.selected ? {backgroundColor: 'transparent'} : {}]}>
             <Text style={styles.choicetext}>{this.props.label}</Text>
           </View>
         </ImageBackground>
@@ -40,25 +40,29 @@ const styles = StyleSheet.create({
   },
   choicetext: {
     alignItems: 'center',
-    alignSelf: 'center',
+    //alignSelf: 'center',
     color: 'white',
-    marginTop: 35,
+    marginTop: 25,
     fontWeight: '600',
-    marginLeft: -18,
-    fontSize: 14,
-    flex: 1,
-    textAlign: 'center'
+//    marginLeft: 0,
+    fontSize: 12,
+  //  flex: 1,
+  //  textAlign: 'center'
   },
   overlay: {
-    backgroundColor:'rgba(80,94,104,0.7)',
-    height: 100,
-    width: 100,
+    backgroundColor:'rgba(0,0,0,0.5)',
+    height: 60,
+    width: 60,
+    borderRadius: 30,
     alignItems:'center'
   },
   bubblechoice: {
-   height: window.height/8.335,
-   borderRadius: (window.height/8.3350)/2,
-   marginRight: 2,
-   width: window.height/8.335,
+   height: 60,
+   borderRadius: 30,
+   marginRight: 5 ,
+   width: 60,
  },
+ imageWrap: {
+   flex: 1,
+},
 });
