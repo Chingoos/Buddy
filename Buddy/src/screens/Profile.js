@@ -71,14 +71,14 @@ const styles = StyleSheet.create({
   },
   font: {
     //fontWeight: 'bold',
-    fontSize: 30,
+    fontSize: 25,
     color: 'black',
-    fontFamily: 'BentonSans Light'
+    fontFamily: 'GothamRounded-Medium'
   },
   fontBold: {
     fontWeight: 'bold',
     fontSize: 30,
     color: 'black',
-    fontFamily: 'BentonSans Light'
+    fontFamily: 'GothamRounded-Medium'
   }
 });

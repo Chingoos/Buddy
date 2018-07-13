@@ -67,6 +67,8 @@
 		0591243FE83B4FDC806703C3 /* BentonSans Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 4D78F10C205248288046CA0C /* BentonSans Black.otf */; };
 		76BBAC65C5AB46DA94F26EBC /* BentonSans Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = E82B15F5E2BC4C3AB2B6E756 /* BentonSans Light.otf */; };
 		4D503716365943A9B8F12247 /* BentonSans Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 0E3868FDCFCB4C54A2F15122 /* BentonSans Thin.otf */; };
+		C231A0F089094C198F5779B6 /* libRangeSlider.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ED8DA0ECF70C4A718692480D /* libRangeSlider.a */; };
+		13A7016C4BEA4EACB4C24BF8 /* GothamRounded-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 7C8C36EA64EF46F1B1CF18F3 /* GothamRounded-Medium.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -403,6 +405,9 @@
 		4D78F10C205248288046CA0C /* BentonSans Black.otf */ = {isa = PBXFileReference; name = "BentonSans Black.otf"; path = "../assets/fonts/BentonSans Black.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		E82B15F5E2BC4C3AB2B6E756 /* BentonSans Light.otf */ = {isa = PBXFileReference; name = "BentonSans Light.otf"; path = "../assets/fonts/BentonSans Light.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		0E3868FDCFCB4C54A2F15122 /* BentonSans Thin.otf */ = {isa = PBXFileReference; name = "BentonSans Thin.otf"; path = "../assets/fonts/BentonSans Thin.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C7D8CB24B36549D498A30DC1 /* RangeSlider.xcodeproj */ = {isa = PBXFileReference; name = "RangeSlider.xcodeproj"; path = "../node_modules/react-native-range-slider/ios/RangeSlider.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		ED8DA0ECF70C4A718692480D /* libRangeSlider.a */ = {isa = PBXFileReference; name = "libRangeSlider.a"; path = "libRangeSlider.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		7C8C36EA64EF46F1B1CF18F3 /* GothamRounded-Medium.otf */ = {isa = PBXFileReference; name = "GothamRounded-Medium.otf"; path = "../assets/fonts/GothamRounded-Medium.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -432,6 +437,7 @@
 				00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */,
 				139FDEF61B0652A700C62182 /* libRCTWebSocket.a in Frameworks */,
 				2F595E2257034011B26D609C /* libRNVectorIcons.a in Frameworks */,
+				C231A0F089094C198F5779B6 /* libRangeSlider.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -619,6 +625,7 @@
 				00C302DF1ABCB9EE00DB3ED1 /* RCTVibration.xcodeproj */,
 				139FDEE61B06529A00C62182 /* RCTWebSocket.xcodeproj */,
 				03DC5B210A164014AA6C89FE /* RNVectorIcons.xcodeproj */,
+				C7D8CB24B36549D498A30DC1 /* RangeSlider.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -699,6 +706,7 @@
 				4D78F10C205248288046CA0C /* BentonSans Black.otf */,
 				E82B15F5E2BC4C3AB2B6E756 /* BentonSans Light.otf */,
 				0E3868FDCFCB4C54A2F15122 /* BentonSans Thin.otf */,
+				7C8C36EA64EF46F1B1CF18F3 /* GothamRounded-Medium.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1179,6 +1187,7 @@
 				0591243FE83B4FDC806703C3 /* BentonSans Black.otf in Resources */,
 				76BBAC65C5AB46DA94F26EBC /* BentonSans Light.otf in Resources */,
 				4D503716365943A9B8F12247 /* BentonSans Thin.otf in Resources */,
+				13A7016C4BEA4EACB4C24BF8 /* GothamRounded-Medium.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1313,10 +1322,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Debug;
@@ -1338,10 +1349,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Release;
@@ -1364,6 +1377,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Debug;
@@ -1385,6 +1399,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Release;
@@ -1415,10 +1430,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Debug;
@@ -1449,10 +1466,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Release;
@@ -1482,10 +1501,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Debug;
@@ -1515,10 +1536,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)\..\node_modules\react-native-vector-icons\RNVectorIconsManager",
+					"$(SRCROOT)\..\node_modules\react-native-range-slider\ios/**",
 				);
 			};
 			name = Release;

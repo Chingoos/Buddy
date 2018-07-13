@@ -21,9 +21,7 @@ export default class Home extends Component {
             <Icon name="magnifier" size={20} style={{paddingRight: 15}} />
             <Input placeholder="Search" />
           </Item>
-          <Button transparent>
-            <Text>Search</Text>
-          </Button>
+          
         </Header>
         <View style = {styles.container}>
           <Text style={styles.font}>
@@ -51,6 +49,6 @@ const styles = StyleSheet.create({
     //fontWeight: 'bold',
     fontSize: 30,
     color: 'black',
-    fontFamily: 'BentonSans Light'
+    fontFamily: 'GothamRounded-Medium'
   }
 });

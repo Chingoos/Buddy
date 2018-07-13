@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
     //fontWeight: 'bold',
     fontSize: 30,
     color: 'black',
-    fontFamily: 'BentonSans Light',
+    fontFamily: 'GothamRounded-Medium',
     margin: 6
   },
   choicetext: {
@@ -61,6 +61,13 @@ const styles = StyleSheet.create({
    borderRadius: 30,
    marginRight: 5 ,
    width: 60,
+   borderColor: '#ddd',
+   borderBottomWidth: 0,
+   shadowColor: 'rgba(0,0,0, .4)', // IOS
+   shadowOffset: { height: 1, width: 1 }, // IOS
+   shadowOpacity: 1, // IOS
+   shadowRadius: 2, //IOS
+   elevation: 3, // Android
  },
  imageWrap: {
    flex: 1,

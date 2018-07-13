@@ -8,8 +8,9 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "prop-types": "^15.6.2",
+    "eslint": "^4.19.1",
     "native-base": "^2.7.1",
+    "prop-types": "^15.6.2",
     "react": "^16.4.1",
     "react-native": "0.55.4",
     "react-native-elements": "^0.19.1",
@@ -41,8 +42,8 @@
     "preset": "react-native"
   },
   "rnpm": {
-      "assets": [
-  	"./assets/fonts/"
-      ]
+    "assets": [
+      "./assets/fonts/"
+    ]
   }
 }
