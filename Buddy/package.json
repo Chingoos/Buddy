@@ -18,7 +18,10 @@
     "react-navigation": "^2.3.1",
     "react-navigation-material-bottom-tabs": "^0.3.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0"
+    "redux": "^4.0.0",
+		"react-native-snap-carousel": "3.7.2",
+    "@ptomasroos/react-native-multi-slider" : "1.0.0",
+    "react-native-switch-selector": "1.1.8"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",

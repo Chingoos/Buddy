@@ -11,26 +11,46 @@ import {
 import {Container, Content,  } from'native-base';
 import { Slider } from 'react-native-elements'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import SwitchSelector from 'react-native-switch-selector';
 import ToggleButton from '../components/ToggleButton'
 import FoodImages from '../assets/FoodImages';
 import Profile from './Profile'
 import colors from '../styles/colors';
 
+const options = [
+  { label: 'All', value: '1' },
+  { label: 'New', value: '1.5' },
+  { label: 'Liked', value: '2' }
+];
+
 export default class Search extends Component {
   constructor(props){
     super(props);
     this.state = {
+      buregers: false,
+      chicken_wings: false,
+      pizza: false,
+      sandwich: false,
+      breakfast: false,
+      vegan: false,
       chinese: false,
-      fastfood: false,
-      burger: false,
       korean: false,
       japanese: false,
+      taiwanese: false,
+      vietnamese: false,
+      coffee: false,
+      boba: false,
+      ice_cream: false,
+      dessert: false,
+      bakery: false,
+      bar: false,
       price: [0,1],
       distance:[0,1],
-      priceString: "Cheap to Moderate",
+      priceString: "Cheap to Average",
       distanceString: "Close to Moderate"
     };
   }
+
   updateChoice(type) {
     let newState = {...this.state};
     newState[type] = !newState[type];
@@ -49,7 +69,7 @@ export default class Search extends Component {
     {
       this.setState({
             price : [0,1],
-            priceString: "Cheap to Moderate"
+            priceString: "Cheap to Average"
         })
     }
     else if(price[0]== 0 && price[1]== 2)
@@ -70,21 +90,21 @@ export default class Search extends Component {
     {
       this.setState({
             price : [1,1],
-            priceString: "Moderate"
+            priceString: "Average"
         })
     }
     else if(price[0]== 1 && price[1]== 2)
     {
       this.setState({
             price : [1,2],
-            priceString: "Moderate to Expensive"
+            priceString: "Average to Expensive"
         })
     }
     else if(price[0]== 1 && price[1]== 3)
     {
       this.setState({
             price : [1,3],
-            priceString: "Mderate to Fancy"
+            priceString: "Average to Fancy"
         })
     }
     else if(price[0]== 2 && price[1]== 2)
@@ -185,22 +205,32 @@ export default class Search extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style ={styles.scroll}>
+          <SwitchSelector buttonColor={colors.accent} options={options} initial={0} onPress={value => console.log(`Call onPress with value: ${value}`)} />
           <View style={styles.container}>
-            <ToggleButton label='Chinese' onPress={() => { this.updateChoice('chinese')  }} selected={this.state.chinese} source={FoodImages['Chinese']}/>
-            <ToggleButton label='Korean' onPress={() => { this.updateChoice('korean')  }} selected={this.state.korean} source={FoodImages['Korean']}/>
-            <ToggleButton label='Japanese' onPress={() => { this.updateChoice('japanese')  }} selected={this.state.japanese} source={FoodImages['Japanese']}/>
-            <ToggleButton label='Fast Food' onPress={() => { this.updateChoice('fastfood')  }} selected={this.state.fastfood} source={FoodImages['FastFood']}/>
-            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
-            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+            <ToggleButton label='Burgers' onPress={() => { this.updateChoice('burgers')  }} selected={this.state.burgers} source={FoodImages['Burgers']}/>
+            <ToggleButton label='Chicken Wings' onPress={() => { this.updateChoice('chicken_wings')  }} selected={this.state.chicken_wings} source={FoodImages['Chicken Wings']}/>
+            <ToggleButton label='Pizza' onPress={() => { this.updateChoice('pizza')  }} selected={this.state.pizza} source={FoodImages['Pizza']}/>
+            <ToggleButton label='Sandwich' onPress={() => { this.updateChoice('sandwich')  }} selected={this.state.sandwich} source={FoodImages['Sandwich']}/>
+            <ToggleButton label='Breakfast' onPress={() => { this.updateChoice('breakfast')  }} selected={this.state.breakfast} source={FoodImages['Breakfast']}/>
+            <ToggleButton label='Vegan' onPress={() => { this.updateChoice('vegan')  }} selected={this.state.vegan} source={FoodImages['vegan']}/>
           </View>
           <View style={styles.container}>
             <ToggleButton label='Chinese' onPress={() => { this.updateChoice('chinese')  }} selected={this.state.chinese} source={FoodImages['Chinese']}/>
             <ToggleButton label='Korean' onPress={() => { this.updateChoice('korean')  }} selected={this.state.korean} source={FoodImages['Korean']}/>
             <ToggleButton label='Japanese' onPress={() => { this.updateChoice('japanese')  }} selected={this.state.japanese} source={FoodImages['Japanese']}/>
-            <ToggleButton label='Fast Food' onPress={() => { this.updateChoice('fastfood')  }} selected={this.state.fastfood} source={FoodImages['FastFood']}/>
-            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
-            <ToggleButton label='BBQ' onPress={() => { this.updateChoice('burger')  }} selected={this.state.burger} source={FoodImages['Ghost']}/>
+            <ToggleButton label='Taiwanese' onPress={() => { this.updateChoice('taiwanese')  }} selected={this.state.taiwanese} source={FoodImages['Taiwanese']}/>
+            <ToggleButton label='Vietnamese' onPress={() => { this.updateChoice('Vietnamese')  }} selected={this.state.vietnamese} source={FoodImages['Vietnamese']}/>
+            <ToggleButton label='Other Asian' onPress={() => { this.updateChoice('asian')  }} selected={this.state.asian} source={FoodImages['Other Asian']}/>
           </View>
+          <View style={styles.container}>
+            <ToggleButton label='Coffee' onPress={() => { this.updateChoice('coffee')  }} selected={this.state.coffee} source={FoodImages['Coffee']}/>
+            <ToggleButton label='Boba' onPress={() => { this.updateChoice('boba')  }} selected={this.state.boba} source={FoodImages['Boba']}/>
+            <ToggleButton label='Ice Cream' onPress={() => { this.updateChoice('ice_cream')  }} selected={this.state.ice_cream} source={FoodImages['Ice Cream']}/>
+            <ToggleButton label='Dessert' onPress={() => { this.updateChoice('dessert')  }} selected={this.state.dessert} source={FoodImages['Dessert']}/>
+            <ToggleButton label='Bakery' onPress={() => { this.updateChoice('bakery')  }} selected={this.state.bakery} source={FoodImages['Bakery']}/>
+            <ToggleButton label='Bar' onPress={() => { this.updateChoice('bar')  }} selected={this.state.bar} source={FoodImages['Bar']}/>
+          </View>
+
           <View style={styles.slider}>
             <Text style={styles.font}> {this.state.priceString}</Text>
             <MultiSlider

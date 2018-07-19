@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   ScrollView,
+  FlatList
 } from 'react-native';
 import {Avatar, Header,} from 'react-native-elements';
 import {Tab, Tabs, ScrollableTab, TabHeading } from'native-base';
