@@ -54,7 +54,7 @@ export default class Home extends Component {
         </View>
         <View style = {styles.container}>
           <Text style={styles.font}>
-            Popular nearby
+            Recommended
           </Text>
         </View>
         <View style={styles.exampleContainer}>

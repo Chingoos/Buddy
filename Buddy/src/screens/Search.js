@@ -205,7 +205,7 @@ export default class Search extends Component {
     return (
       <View style={{flex: 1}}>
         <ScrollView style ={styles.scroll}>
-          <SwitchSelector buttonColor={colors.accent} options={options} initial={0} onPress={value => console.log(`Call onPress with value: ${value}`)} />
+          <SwitchSelector textStyle={styles.font} valuePadding={3} buttonColor={colors.accent} options={options} initial={0} onPress={value => console.log(`Call onPress with value: ${value}`)} />
           <View style={styles.container}>
             <ToggleButton label='Burgers' onPress={() => { this.updateChoice('burgers')  }} selected={this.state.burgers} source={FoodImages['Burgers']}/>
             <ToggleButton label='Chicken Wings' onPress={() => { this.updateChoice('chicken_wings')  }} selected={this.state.chicken_wings} source={FoodImages['Chicken Wings']}/>
@@ -219,7 +219,7 @@ export default class Search extends Component {
             <ToggleButton label='Korean' onPress={() => { this.updateChoice('korean')  }} selected={this.state.korean} source={FoodImages['Korean']}/>
             <ToggleButton label='Japanese' onPress={() => { this.updateChoice('japanese')  }} selected={this.state.japanese} source={FoodImages['Japanese']}/>
             <ToggleButton label='Taiwanese' onPress={() => { this.updateChoice('taiwanese')  }} selected={this.state.taiwanese} source={FoodImages['Taiwanese']}/>
-            <ToggleButton label='Vietnamese' onPress={() => { this.updateChoice('Vietnamese')  }} selected={this.state.vietnamese} source={FoodImages['Vietnamese']}/>
+            <ToggleButton label='Vietnamese' onPress={() => { this.updateChoice('vietnamese')  }} selected={this.state.vietnamese} source={FoodImages['Vietnamese']}/>
             <ToggleButton label='Other Asian' onPress={() => { this.updateChoice('asian')  }} selected={this.state.asian} source={FoodImages['Other Asian']}/>
           </View>
           <View style={styles.container}>

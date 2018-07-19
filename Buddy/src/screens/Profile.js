@@ -10,8 +10,23 @@ import {Avatar, Header,} from 'react-native-elements';
 import {Tab, Tabs, ScrollableTab, TabHeading } from'native-base';
 import Icon from 'react-native-vector-icons/dist/SimpleLineIcons';
 import colors from '../styles/colors';
-
+import { ENTRIES1} from '../components/tempData';
 export default class Profile extends Component {
+  renderContent(screen)
+  {
+    if (screen === 'like') {
+    }
+    else if (screen === 'dislike')
+    {
+    }
+    else if (screen === 'journal')
+    {
+
+    }
+    else {
+    }
+
+  }
   render() {
     return (
       <ScrollView style ={styles.scroll}>
@@ -48,6 +63,19 @@ export default class Profile extends Component {
             heading={<TabHeading style={{ backgroundColor: colors.background }}><Icon name="camera" size={30} style={{color: 'black'}} /></TabHeading>}>
           </Tab>
         </Tabs>
+        <View style={styles.container}>
+          <FlatList
+            data={ENTRIES1}
+            showsVerticalScrollIndicator={false}
+            renderItem={({item}) =>
+            <View style={styles.flatview}>
+              <Text style={styles.listFontBold}>{item.title}</Text>
+              <Text style={styles.listFont}>{item.etc}</Text>
+            </View>
+            }
+            keyExtractor={item => item.email}
+          />
+        </View>
       </ScrollView>
     );
   }
@@ -81,5 +109,23 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'black',
     fontFamily: 'GothamRounded-Medium'
-  }
+  },
+  listFont: {
+    //fontWeight: 'bold',
+    fontSize: 15,
+    color: 'black',
+    fontFamily: 'GothamRounded-Medium'
+  },
+  listFontBold: {
+    fontWeight: 'bold',
+    fontSize: 20,
+    color: 'black',
+    fontFamily: 'GothamRounded-Medium'
+  },
+  flatview: {
+    justifyContent: 'center',
+    paddingTop: 5,
+    borderRadius: 2,
+    borderBottomWidth: 0.5,
+  },
 });
