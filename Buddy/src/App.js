@@ -1,7 +1,6 @@
 import React from 'react';
-import {
-  createStackNavigator,
-} from 'react-navigation';
+import { StatusBar, View } from 'react-native';
+import { createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { Search, Home, Profile } from './screens';
@@ -24,7 +23,7 @@ const Stack = createStackNavigator({
   },
 });
 
-export default createMaterialBottomTabNavigator(
+const AppNavigation = createMaterialBottomTabNavigator(
   {
     Home: { screen: Home },
     Search: { screen: Search },
@@ -48,7 +47,7 @@ export default createMaterialBottomTabNavigator(
         }
         // You can return any component that you like here! We usually use an
         // icon component from react-native-vector-icons
-        return <Icon name={iconName} size={25} color={tintColor} />;
+        return <Icon name={iconName} size={22.5} color={tintColor} />;
       },
     }),
     labeled: false,
@@ -58,3 +57,12 @@ export default createMaterialBottomTabNavigator(
     barStyle: { backgroundColor: 'white' },
   }
 );
+
+const App = () => (
+  <View style={{ flex: 1 }}>
+    <StatusBar backgroundColor="white" barStyle="dark-content" />
+    <AppNavigation />
+  </View>
+);
+
+export default App;
