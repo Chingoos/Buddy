@@ -7,6 +7,7 @@
     "test": "jest"
   },
   "dependencies": {
+    "@ptomasroos/react-native-multi-slider": "1.0.0",
     "axios": "^0.18.0",
     "eslint": "^4.19.1",
     "native-base": "^2.7.1",
@@ -14,14 +15,14 @@
     "react": "^16.4.1",
     "react-native": "0.55.4",
     "react-native-elements": "^0.19.1",
+    "react-native-google-signin": "^0.12.0",
+    "react-native-snap-carousel": "3.7.2",
+    "react-native-switch-selector": "1.1.8",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.3.1",
     "react-navigation-material-bottom-tabs": "^0.3.0",
     "react-redux": "^5.0.7",
-    "redux": "^4.0.0",
-		"react-native-snap-carousel": "3.7.2",
-    "@ptomasroos/react-native-multi-slider" : "1.0.0",
-    "react-native-switch-selector": "1.1.8"
+    "redux": "^4.0.0"
   },
   "devDependencies": {
     "babel-eslint": "^8.2.5",

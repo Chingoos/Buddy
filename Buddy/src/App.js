@@ -4,7 +4,7 @@ import {
 } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { Search, Home, Profile } from './screens';
+import { Search, Home, Profile, Calendar, Login } from './screens';
 
 const Stack = createStackNavigator({
   Search: {
@@ -19,8 +19,8 @@ const Stack = createStackNavigator({
   Profile2: {
     screen: Profile,
   },
-  Profile3: {
-    screen: Profile,
+  Login: {
+    screen: Login,
   },
 });
 
@@ -30,7 +30,7 @@ export default createMaterialBottomTabNavigator(
     Search: { screen: Search },
     Profile: { screen: Profile },
     Profile2: { screen: Profile },
-    Profile3: { screen: Profile },
+    Login: { screen: Login },
   },
   {
     navigationOptions: ({ navigation }) => ({
