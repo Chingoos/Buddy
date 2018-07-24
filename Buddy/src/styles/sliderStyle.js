@@ -23,7 +23,7 @@ export default StyleSheet.create({
         width: itemWidth,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
-        paddingBottom: 18 // needed for shadow
+        // paddingBottom: 18 // needed for shadow
     },
     shadow: {
         position: 'absolute',
@@ -79,19 +79,23 @@ export default StyleSheet.create({
         backgroundColor: colors.black
     },
     title: {
-        color: colors.black,
         fontSize: 13,
-        fontWeight: 'bold',
-        letterSpacing: 0.5
+        color: colors.black,
+        fontFamily: 'GothamRounded-Medium',
     },
     titleEven: {
         color: 'white'
     },
     subtitle: {
         marginTop: 6,
-        color: colors.gray,
         fontSize: 12,
-        fontStyle: 'italic'
+        color: colors.gray,
+        fontFamily: 'GothamRounded-Medium',
+    },
+    etc: {
+      fontSize: 12,
+      color: colors.gray,
+      fontFamily: 'GothamRounded-Medium',
     },
     subtitleEven: {
         color: 'rgba(255, 255, 255, 0.7)'
