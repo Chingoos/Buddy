@@ -2,6 +2,7 @@ package com.buddy;
 
 import com.facebook.react.ReactActivity;
 import com.BV.LinearGradient.LinearGradientPackage; 
+import android.content.Intent;
 
 public class MainActivity extends ReactActivity {
 
@@ -12,5 +13,10 @@ public class MainActivity extends ReactActivity {
     @Override
     protected String getMainComponentName() {
         return "Buddy";
+    }
+	@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        MainApplication.getCallbackManager().onActivityResult(requestCode, resultCode, data);
     }
 }

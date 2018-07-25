@@ -1,26 +1,17 @@
 import React from 'react';
 import { StatusBar, View } from 'react-native';
-import { createStackNavigator } from 'react-navigation';
+import { StackNavigator, createStackNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { Search, Home, Profile, Calendar, Login } from './screens';
-
+import { Search, Home, Profile, Login,   } from './screens';
+import SignUp from './screens/SignUp';
+import Calendar from './screens/Calendar';
 const Stack = createStackNavigator({
-  Search: {
-    screen: Search,
-  },
-  Home: {
-    screen: Home,
-  },
-  Profile: {
-    screen: Profile,
-  },
-  Profile2: {
-    screen: Profile,
-  },
-  Login: {
-    screen: Login,
-  },
+
+  SignUp:  {
+    screen: SignUp,
+  }
+
 });
 
 const AppNavigation = createMaterialBottomTabNavigator(
@@ -28,7 +19,7 @@ const AppNavigation = createMaterialBottomTabNavigator(
     Home: { screen: Home },
     Search: { screen: Search },
     Profile: { screen: Profile },
-    Profile2: { screen: Profile },
+    Calendar: {screen: Calendar},
     Login: { screen: Login },
   },
   {
@@ -51,7 +42,7 @@ const AppNavigation = createMaterialBottomTabNavigator(
       },
     }),
     labeled: false,
-    initialRouteName: 'Search',
+    initialRouteName: 'Login',
     activeTintColor: 'black',
     inactiveTintColor: 'grey',
     barStyle: { backgroundColor: 'white' },

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Buddy</string>
+	<string name="facebook_app_id">1117731191698780</string>
+	<string name="fb_login_protocol_scheme">fb1117731191698780</string>
 </resources>
