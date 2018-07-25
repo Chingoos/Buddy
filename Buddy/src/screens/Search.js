@@ -7,10 +7,12 @@ import {
   TouchableOpacity,
   Dimensions,
   FlatList,
+  Alert,
 } from 'react-native';
 import { Container, Content } from 'native-base';
 import { Slider } from 'react-native-elements'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
+import axios from 'axios';
 import SwitchSelector from '../components/SwitchSelector';
 import ToggleButton from '../components/ToggleButton'
 import FoodImages from '../assets/FoodImages';
@@ -101,11 +103,31 @@ const foodList = [
 
 const screenDimensions = Dimensions.get('window');
 const numColumns = Math.floor((screenDimensions.width - 30) / 62.5);
+const defaultState = {
+  burgers: false,
+  chicken_wings: false,
+  pizza: false,
+  sandwich: false,
+  breakfast: false,
+  vegan: false,
+  chinese: false,
+  korean: false,
+  japanese: false,
+  taiwanese: false,
+  vietnamese: false,
+  coffee: false,
+  boba: false,
+  ice_cream: false,
+  dessert: false,
+  bakery: false,
+  bar: false,
+};
 
 export default class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      selectedFood: '',
       burgers: false,
       chicken_wings: false,
       pizza: false,
@@ -130,17 +152,48 @@ export default class Search extends Component {
     };
   }
 
-  onSubmitPressed() {
-    this.props.navigator.push({
-      screen: 'Profile',
-      passProps: {},
-      title: 'Profile',
-    });
-  }
+  onSubmitPressed = () => {
+    const foodType = this.state.selectedFood;
+    if (foodType === '') {
+      Alert.alert('Please select a food.');
+    } else {
+      const URL = `https://api.yelp.com/v3/businesses/search?limit=50&location=sanfrancisco&term=${foodType}`;
+      console.log(URL);
+      const KEY =
+        'Fgz6gxZipSFWMN7LkONPfy20W35ClUg-QyWQbvJlhNmVlTMUDDGINwPfZq-40V2Y95ZDpvTKKOBCI6Xsnj-bXJSKxBY_mYR2TiBtb13VCYTXcCkgqiyyK_vM6TVOW3Yx';
+      const AUTH = `Bearer ${KEY}`;
+      console.log(AUTH);
+      axios
+        .get(URL, {
+          headers: { Authorization: AUTH },
+        })
+       .then(response => {
+         Alert.alert(`Success! Found ${response.data.businesses.length} results!`);
+         console.log(response.data);
+        })
+       .catch(error => {
+         console.log(`error ${error}`);
+        });
+    }
+    // this.props.navigator.push({
+    //   screen: 'Profile',
+    //   passProps: {},
+    //   title: 'Profile',
+    // });
+  };
 
-  updateChoice(type) {
-    const newState = { ...this.state };
-    newState[type] = !newState[type];
+  updateChoice(foodType) {
+    // Grab current state of food.
+    const typeState = this.state[foodType];
+
+    const newState = { ...this.state, ...defaultState };
+    // newState[type] = !newState[type];
+
+    // Toggled Food Button from true and false.
+    newState[foodType] = !typeState;
+
+    // Set selectedFood state to empty when deselected, else set as food type.
+    newState.selectedFood = !typeState ? foodType : '';
     this.setState(newState);
   }
 
@@ -227,14 +280,16 @@ export default class Search extends Component {
 
   renderItem = ({ item }) => {
     return (
-      <ToggleButton
-        label={item.label}
-        onPress={() => {
-          this.updateChoice(item.state);
-        }}
-        selected={this.state[item.state]}
-        source={FoodImages[item.label]}
-      />
+      <View>
+        <ToggleButton
+          label={item.label}
+          onPress={() => {
+            this.updateChoice(item.state);
+          }}
+          selected={this.state[item.state]}
+          source={FoodImages[item.label]}
+        />
+      </View>
     );
   };
 
@@ -256,6 +311,7 @@ export default class Search extends Component {
             shadowOpacity={0.5}
             shadowRadius={10}
             style={styles.button}
+            onPress={this.onSubmitPressed}
           >
             <Text style={[styles.font, { color: 'white' }]}>Search!</Text>
           </TouchableOpacity>

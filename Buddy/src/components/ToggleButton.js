@@ -62,8 +62,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1, // IOS
     shadowRadius: 2, // IOS
     elevation: 3, // Android
-    margin: 2.5,
-    marginLeft: 0,
+    margin: 1.25,
     backgroundColor: 'white',
   },
   imageWrap: {
