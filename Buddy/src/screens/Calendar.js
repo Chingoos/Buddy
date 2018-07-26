@@ -6,7 +6,7 @@ import {
 } from 'react-native';
 import {Agenda} from 'react-native-calendars';
 
-export default class AgendaScreen extends Component {
+export default class Calendar extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -19,7 +19,8 @@ export default class AgendaScreen extends Component {
       <Agenda
         items={this.state.items}
         loadItemsForMonth={this.loadItems.bind(this)}
-        selected={'2017-05-16'}
+        pastScrollRange={12}
+        futureScrollRange={12}
         renderItem={this.renderItem.bind(this)}
         renderEmptyDate={this.renderEmptyDate.bind(this)}
         rowHasChanged={this.rowHasChanged.bind(this)}

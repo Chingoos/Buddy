@@ -4,13 +4,11 @@ import {
 } from 'react-native';
 
 export default class SignUp extends React.Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
   constructor(props){
     super(props)
   }
   render() {
+    const { goBack } = this.props.navigation;
     return (
       <SafeAreaView style={styles.scroll}>
         <View style={styles.logoContainer}>
@@ -19,15 +17,15 @@ export default class SignUp extends React.Component {
         </View>
 
         <View style={styles.container}>
-          <TextInput underlineColorAndroid='transparent' placeholder='Email' style={styles.textinput} />
-          <TextInput underlineColorAndroid='transparent' placeholder='Password' style={styles.textinput} />
-          <TextInput underlineColorAndroid='transparent' placeholder='Confirm Password' style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Email' keyboardType="email-address" onSub style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Password' secureTextEntry ={true} style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Confirm Password' secureTextEntry ={true} style={styles.textinput} />
           <TouchableOpacity style={styles.loginbtn}>
             <Text>Sign Up</Text>
           </TouchableOpacity>
           <View style={styles.signUpTextContainer}>
             <Text style={styles.signUpText}>Already have an account? </Text>
-            <TouchableOpacity onPress={() =>         {this.props.navigation}      }>
+            <TouchableOpacity onPress={() =>   goBack()      }>
               <Text style={styles.signUpButton}>Log In</Text></TouchableOpacity>
           </View>
         </View>
