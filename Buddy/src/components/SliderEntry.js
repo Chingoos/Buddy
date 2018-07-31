@@ -59,18 +59,16 @@ export default class SliderEntry extends Component {
                 </View>
                 <View style={styles.textContainer}>
                     { uppercaseTitle }
-                    <Text
-                      style={styles.subtitle}
-                      numberOfLines={2}
-                    >
-                        { subtitle }
+                    <Text style={styles.etc} numberOfLines={2}>
+                        { this.props.category }
                     </Text>
-                    <Text
-                      style={styles.etc}
-                      numberOfLines={2}
-                    >
-                        { etc }
+                    <Text style={styles.etc} numberOfLines={2}>
+                        { this.props.review }
                     </Text>
+                    <View style ={{flexDirection: 'row', marginTop: 3}}>
+                      <Text style={styles.others}> { this.props.price } </Text>
+                      <Text style={styles.others}> { this.props.distance } </Text>
+                    </View>
                 </View>
             </TouchableOpacity>
         );

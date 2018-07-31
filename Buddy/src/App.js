@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { Search, Home, Profile, Login,   } from './screens';
 import SignUp from './screens/SignUp';
 import Calendar from './screens/Calendar';
+import SearchList from './screens/SearchList';
+import RandomWheel from './screens/RandomWheel';
+import Swiper from './screens/Swiper';
 
 const LoginStack = createStackNavigator({
   Login: { screen: Login,
@@ -20,14 +23,30 @@ const LoginStack = createStackNavigator({
    }),
   }
 });
+const SearchStack = createStackNavigator({
+  Search: { screen: Search,
+
+     navigationOptions: () => ({
+      header: null
+    }),
+  },
+  Swiper:  { screen: Swiper,
+    navigationOptions: () => ({
+
+   }),
+ },
+  SearchList: {screen: SearchList},
+  RandomWheel: {screen: RandomWheel},
+});
 
 const AppNavigation = createMaterialBottomTabNavigator(
   {
     Home: { screen: Home },
-    Search: { screen: Search },
-    Profile: { screen: Profile },
-    Calendar: {screen: Calendar},
+    Search: { screen: SearchStack },
     Login: { screen: LoginStack },
+    Calendar: {screen: Calendar},
+    Profile: { screen: Profile },
+
   },
   {
     navigationOptions: ({ navigation }) => ({

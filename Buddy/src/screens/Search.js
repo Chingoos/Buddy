@@ -194,6 +194,7 @@ export default class Search extends Component {
 
     if (term === '') {
       Alert.alert('Please select a food.');
+      this.props.navigation.navigate("Swiper");
     } else {
       const URL = `http://tae.hidevmobile.com/search.php`;
       axios
@@ -210,6 +211,7 @@ export default class Search extends Component {
        .catch(error => {
          console.log(`error ${error}`);
         });
+        this.props.navigation.navigate("Swiper");
     }
   };
 
