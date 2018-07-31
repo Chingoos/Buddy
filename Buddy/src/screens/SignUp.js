@@ -6,7 +6,48 @@ import {
 export default class SignUp extends React.Component {
   constructor(props){
     super(props)
+    this.state={
+			userName:'',
+			userEmail:'',
+			userPassword:''
+		}
   }
+  userRegister = () =>{
+		//alert('ok'); // version 0.48
+
+		const {userName} = this.state;
+		const {userEmail} = this.state;
+		const {userPassword} = this.state;
+
+
+		fetch('http://tae.hidevmobile.com/signup.php', {
+			method: 'post',
+			header:{
+				'Accept': 'application/json',
+				'Content-type': 'application/json'
+			},
+			body:JSON.stringify({
+				name: userName,
+				email: userEmail,
+				password: userPassword,
+			})
+
+		})
+		.then((response) => response.json())
+			.then((responseJson) =>{
+        if(responseJson== "User Registered Successfully")
+        {
+          this.props.navigation.navigate("Home");
+        }
+        else {
+          alert(responseJson);
+        }
+			})
+			.catch((error)=>{
+				console.error(error);
+			});
+
+	}
   render() {
     const { goBack } = this.props.navigation;
     return (
@@ -17,10 +58,11 @@ export default class SignUp extends React.Component {
         </View>
 
         <View style={styles.container}>
-          <TextInput underlineColorAndroid='transparent' placeholder='Email' keyboardType="email-address" onSub style={styles.textinput} />
-          <TextInput underlineColorAndroid='transparent' placeholder='Password' secureTextEntry ={true} style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Username'  onSub  onChangeText= {userName => this.setState({userName})}  style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Email' keyboardType="email-address" onChangeText= {userEmail => this.setState({userEmail})} onSub style={styles.textinput} />
+          <TextInput underlineColorAndroid='transparent' placeholder='Password' secureTextEntry ={true} onChangeText={userPassword => this.setState({userPassword})} style={styles.textinput} />
           <TextInput underlineColorAndroid='transparent' placeholder='Confirm Password' secureTextEntry ={true} style={styles.textinput} />
-          <TouchableOpacity style={styles.loginbtn}>
+          <TouchableOpacity onPress={this.userRegister} style={styles.loginbtn}>
             <Text>Sign Up</Text>
           </TouchableOpacity>
           <View style={styles.signUpTextContainer}>

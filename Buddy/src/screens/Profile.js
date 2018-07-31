@@ -78,7 +78,17 @@ export default class Profile extends Component {
             renderItem={({ item }) =>
               <View style={styles.flatview}>
                 <Text style={styles.listFontBold}>{item.title}</Text>
-                <Text style={styles.listFont}>{item.etc}</Text>
+                <Text style={styles.listFont} numberOfLines={2}>
+                    { item.category }
+                </Text>
+
+                <View style ={{flexDirection: 'row', marginTop: 3}}>
+                <Text style={styles.listFont} >
+                    { item.review }
+                </Text>
+                  <Text style={styles.listFont}> { item.price } </Text>
+                  <Text style={styles.listFont}> { item.distance } </Text>
+                </View>
               </View>
             }
             ItemSeparatorComponent={() => <View style={styles.divider} />}

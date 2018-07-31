@@ -156,6 +156,7 @@ export default class Search extends Component {
     const foodType = this.state.selectedFood;
     if (foodType === '') {
       Alert.alert('Please select a food.');
+      this.props.navigation.navigate("Swiper");
     } else {
       const URL = `https://api.yelp.com/v3/businesses/search?limit=50&location=sanfrancisco&term=${foodType}`;
       console.log(URL);
@@ -174,6 +175,7 @@ export default class Search extends Component {
        .catch(error => {
          console.log(`error ${error}`);
         });
+        this.props.navigation.navigate("Swiper");
     }
     // this.props.navigator.push({
     //   screen: 'Profile',

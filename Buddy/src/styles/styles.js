@@ -80,5 +80,8 @@ export default StyleSheet.create({
         height: 8,
         borderRadius: 4,
         marginHorizontal: 8
+    },
+    marker:{
+    position: 'absolute'
     }
 });
