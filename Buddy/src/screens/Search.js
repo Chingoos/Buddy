@@ -194,7 +194,6 @@ export default class Search extends Component {
 
     if (term === '') {
       Alert.alert('Please select a food.');
-      this.props.navigation.navigate("Swiper");
     } else {
       const URL = `http://tae.hidevmobile.com/search.php`;
       axios
@@ -205,13 +204,15 @@ export default class Search extends Component {
           price,
         })
        .then(response => {
-         Alert.alert(`Success! Found ${response.data.businesses.length} results!`);
-         console.log(response);
+          Alert.alert(
+            `Success! Found ${response.data.businesses.length} results!`
+          );
+          console.log(response);
+          this.props.navigation.navigate('Swiper');
         })
        .catch(error => {
-         console.log(`error ${error}`);
+          console.log(`error ${error}`);
         });
-        this.props.navigation.navigate("Swiper");
     }
   };
 
