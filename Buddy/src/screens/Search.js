@@ -27,6 +27,7 @@ const options = [
 
 const priceRange = ['Cheap', 'Average', 'Expensive', 'Fancy'];
 const distanceRange = ['Close', 'Moderate', 'Far', 'Very Far'];
+const distanceSettings = ['320', '965', '1609', '8046']; // 2 blocks, 6 blocks, 1 mile, 5 miles.
 
 // Made this because you have different naming coventions for state, updateChoice, and images.
 // EX: label: 'Chicken Wings', updateChoice('chicken_wings'), FoodImages['Chicken Wings']
@@ -152,34 +153,64 @@ export default class Search extends Component {
     };
   }
 
+  // onSubmitPressed = () => {
+  //   const foodType = this.state.selectedFood;
+  //   if (foodType === '') {
+  //     Alert.alert('Please select a food.');
+  //   } else {
+  //     const URL = `https://api.yelp.com/v3/businesses/search?limit=50&location=sanfrancisco&term=${foodType}`;
+  //     console.log(URL);
+  //     const KEY =
+  //       'Fgz6gxZipSFWMN7LkONPfy20W35ClUg-QyWQbvJlhNmVlTMUDDGINwPfZq-40V2Y95ZDpvTKKOBCI6Xsnj-bXJSKxBY_mYR2TiBtb13VCYTXcCkgqiyyK_vM6TVOW3Yx';
+  //     const AUTH = `Bearer ${KEY}`;
+  //     console.log(AUTH);
+  //     axios
+  //       .get(URL, {
+  //         headers: { Authorization: AUTH },
+  //       })
+  //      .then(response => {
+  //        Alert.alert(`Success! Found ${response.data.businesses.length} results!`);
+  //        console.log(response.data);
+  //       })
+  //      .catch(error => {
+  //        console.log(`error ${error}`);
+  //       });
+  //   }
+  //   // this.props.navigator.push({
+  //   //   screen: 'Profile',
+  //   //   passProps: {},
+  //   //   title: 'Profile',
+  //   // });
+  // };
+
   onSubmitPressed = () => {
-    const foodType = this.state.selectedFood;
-    if (foodType === '') {
+    const term = this.state.selectedFood;
+    const distance = distanceSettings[this.state.distance[1]];
+    const price = Array.from(
+      { length: this.state.price[1] - this.state.price[0] + 1 },
+      (x, i) => i + this.state.price[0] + 1
+    ).toString();
+    const location = 'San Francisco, CA';
+
+    if (term === '') {
       Alert.alert('Please select a food.');
     } else {
-      const URL = `https://api.yelp.com/v3/businesses/search?limit=50&location=sanfrancisco&term=${foodType}`;
-      console.log(URL);
-      const KEY =
-        'Fgz6gxZipSFWMN7LkONPfy20W35ClUg-QyWQbvJlhNmVlTMUDDGINwPfZq-40V2Y95ZDpvTKKOBCI6Xsnj-bXJSKxBY_mYR2TiBtb13VCYTXcCkgqiyyK_vM6TVOW3Yx';
-      const AUTH = `Bearer ${KEY}`;
-      console.log(AUTH);
+      const URL = `http://tae.hidevmobile.com/search.php`;
       axios
-        .get(URL, {
-          headers: { Authorization: AUTH },
+        .post(URL, {
+          term,
+          location,
+          distance,
+          price,
         })
        .then(response => {
          Alert.alert(`Success! Found ${response.data.businesses.length} results!`);
-         console.log(response.data);
+         console.log(response);
         })
        .catch(error => {
          console.log(`error ${error}`);
         });
     }
-    // this.props.navigator.push({
-    //   screen: 'Profile',
-    //   passProps: {},
-    //   title: 'Profile',
-    // });
   };
 
   updateChoice(foodType) {
@@ -229,7 +260,7 @@ export default class Search extends Component {
     <SwitchSelector
       selectedTextStyle={[styles.font, { color: 'white' }]}
       textStyle={styles.font}
-      style={{ paddingBottom: 15 }}
+      style={{ padding: 15, paddingBottom: 0 }}
       valuePadding={3}
       buttonColor={colors.accent}
       options={options}
@@ -296,13 +327,14 @@ export default class Search extends Component {
   render() {
     return (
       <View style={styles.container}>
+        {this.renderHeader()}
         <FlatList
           style={{ flex: 1, marginBottom: 70, padding: 15, paddingBottom: 0 }}
+          contentContainerStyle={{ alignItems: 'center' }}
           data={foodList}
           keyExtractor={item => item.label}
           renderItem={this.renderItem}
           numColumns={numColumns}
-          ListHeaderComponent={this.renderHeader}
           ListFooterComponent={this.renderFooter}
           ItemSeparatorComponent={() => <View style={styles.divider} />}
         />
