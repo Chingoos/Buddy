@@ -1,7 +1,8 @@
 import img1 from '../assets/images/image1.jpeg';
 export const ENTRIES1 = [
     {
-        id: '1',
+
+        key: '1',
         title: 'Four Barrel Coffee ',
         subtitle: '375 Valencia St San Francisco, CA 94103',
         price: '$',
@@ -12,7 +13,7 @@ export const ENTRIES1 = [
         isActive: true
     },
     {
-        id: '2',
+        key: '2',
         title: 'Kaiser Don',
         subtitle: '1939 Ocean Ave San Francisco, CA 94127',
         price: '$$',
@@ -23,7 +24,7 @@ export const ENTRIES1 = [
         isActive: false
     },
     {
-        id: '3',
+        key: '3',
         title: 'Go Go 7',
         subtitle: '1300 Ocean Ave San Francisco, CA 94112',
         price: '$$',
@@ -34,7 +35,7 @@ export const ENTRIES1 = [
         isActive: false
     },
     {
-        id: '4',
+        key: '4',
         title: 'Pokihub',
         subtitle: '1130 Ocean Ave San Francisco, CA 94112',
         price: '$$',
@@ -45,7 +46,7 @@ export const ENTRIES1 = [
         isActive: false
     },
     {
-        id: '5',
+        key: '5',
         title: '21 Taste House',
         subtitle: '1109 Ocean Ave San Francisco, CA 94112',
         price: '$$',
@@ -56,7 +57,7 @@ export const ENTRIES1 = [
         isActive: false
     },
     {
-        id: '6',
+        key: '6',
         title: 'McDonald’s',
         subtitle: '1201 Ocean Ave San Francisco, CA 94112',
         price: '$',

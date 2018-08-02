@@ -44,9 +44,9 @@ export default class Swiper extends React.Component {
     this.state = {cards};
   }
 
-  onCardSwiped = (id) => {
+  onCardSwiped = (key) => {
     this.setState(prevState => {
-      const swipedIndex = prevState.cards.findIndex(card => card.id === id);
+      const swipedIndex = prevState.cards.findIndex(card => card.key === key);
       const isLastIndex = swipedIndex === (prevState.cards.length - 1);
       const nextIndex = swipedIndex + 1;
       const newState = {...prevState};
@@ -65,7 +65,7 @@ export default class Swiper extends React.Component {
     }
     Animated.spring(position, {
       toValue: { x: SCREEN_WIDTH + 100, y: dy }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
+    }).start(this.onCardSwiped(this.state.cards[activeIndex].key));
   }
 
   handleNopeSelect = (dy=0, position=false) => {
@@ -76,14 +76,14 @@ export default class Swiper extends React.Component {
     }
     Animated.spring(position, {
       toValue: { x: -SCREEN_WIDTH - 100, y: dy }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
+    }).start(this.onCardSwiped(this.state.cards[activeIndex].key));
   }
 
   renderCards = (cards) => {
     if (this.isEmptyState()) {this.props.navigation.navigate("SearchList")}
 
     return cards.map((card, index) => {
-      return <Card key={card.id} {...card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
+      return <Card key={card.key} {...card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
     }).reverse();
   }
 
