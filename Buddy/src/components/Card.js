@@ -102,16 +102,20 @@ export default class Card extends React.Component {
             <Text style={styles.title} numberOfLines={2}>
                 { this.props.title.toUpperCase() }
             </Text>
-            <Text style={styles.etc} numberOfLines={2}>
-                { this.props.category }
-            </Text>
-
-            <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Text style={styles.review} >
-                  { this.props.review }
+            <View style={{flexDirection:'row'}}>
+              <Text style={styles.etc} >
+                  { this.props.category }
               </Text>
-              <Text style={styles.others}> { this.props.price } </Text>
+              <View style={{right: 0, position: "absolute"}}>
+                <Text style={styles.others}> { this.props.price } </Text>
+              </View>
+            </View>
+            <View style ={{flexDirection: 'row', marginTop: 3}}>
               <Text style={styles.others}> { this.props.distance } </Text>
+              <View style={{right: 0, position: "absolute"}}>
+                <Text style={styles.review}> { this.props.review } </Text>
+              </View>
+
             </View>
             <Text style={styles.openNow} numberOfLines={2}>
                 Open Now
@@ -137,24 +141,31 @@ export default class Card extends React.Component {
 
 const styles = StyleSheet.create({
   cardImg: {
-    borderRadius: 20,
+
     height: 300,
     width: SCREEN_WIDTH,
     resizeMode: 'cover',
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
 
   },
   card: {
     position: 'absolute',
-    height: '105%',
+    height: '100%',
     width: SCREEN_WIDTH,
-    // shadowOffset:{ width: 0,  height: 2, },
-    // shadowOpacity: .2,
-    // shadowRadius: 5,
+    borderRadius: 15,
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 2, // IOS
+    elevation: 5, // Android
   },
   cardTextContainer: {
+
     position: 'absolute',
     top: 45,
     zIndex: 999,
+
   },
   cardText: {
     borderWidth: 2,
@@ -213,13 +224,14 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   textContainer: {
+    flex: 1,
       justifyContent: 'center',
       paddingTop: 12,
       paddingBottom: 20,
       paddingHorizontal: 16,
       backgroundColor: 'white',
-      borderBottomLeftRadius: 8,
-      borderBottomRightRadius: 8
+      borderBottomLeftRadius :15,
+      borderBottomRightRadius: 15,
   },
   title: {
       fontWeight: 'bold',

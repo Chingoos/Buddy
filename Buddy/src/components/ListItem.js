@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet, Animated, Dimensions, PanResponder, Platform, Image} from 'react-native';
 
 const {width} = Dimensions.get('window');
-
+import colors from '../styles/colors'
 export default class ListItem extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -62,31 +62,23 @@ export default class ListItem extends React.PureComponent {
           </View>
           <View style={styles.row}>
           <Image source={{uri: this.props.image}} style={styles.image} />
-            <View style={styles.firstRow}>
-              <View style={styles.secondRow}>
-                <View style={styles.title}>
-                  <Text style={styles.titleText}>
-                    {this.props.title}
-                  </Text>
-                </View>
-                <View style={styles.etc}>
-                  <Text style={styles.subTitle}>
-                    {this.props.price}
-                  </Text>
-                  <Text style={styles.subTitle}>
-                    {this.props.distance}
-                  </Text>
-                  <Text style={styles.subTitle}>
-                    {this.props.review}
-                  </Text>
-                </View>
-              </View>
-              <View style={styles.secondRow}>
-                <Text style={styles.category}>
-                  {this.props.category}
-                </Text>
+          <View style = {styles.textContainer}>
+            <Text style={styles.title}> {this.props.title} </Text>
+            <View style={{flexDirection: 'row',}}>
+
+              <Text style={styles.category}> {this.props.category} </Text>
+              <View style={{right: 0, position: "absolute"}}>
+                <Text style={styles.category}> {this.props.price} </Text>
               </View>
             </View>
+            <View style={{flexDirection: 'row',}}>
+
+              <Text style={styles.category}> {this.props.distance} </Text>
+              <View style={{right: 0, position: "absolute"}}>
+                <Text style={styles.category}> {this.props.review} </Text>
+              </View>
+            </View>
+          </View>
           </View>
         </Animated.View>
       </View>
@@ -185,24 +177,37 @@ const styles = StyleSheet.create({
     fontFamily: 'GothamRounded-Medium',
     marginLeft: 5
   },
-  review: {
-    //fontWeight: 'bold',
-    fontSize: 15,
-    color: 'black',
-    fontFamily: 'GothamRounded-Medium',
-
-  },
-  category: {
-    //fontWeight: 'bold',
-    fontSize: 17,
-    color: 'black',
-    fontFamily: 'GothamRounded-Medium',
-
-  },
   image: {
     width: 50,
     height: 50,
     marginRight: 15,
     borderRadius: 25,
+  },
+  textContainer:
+  {
+    padding: 1,
+    flex: 1,
+  },
+  category: {
+    fontSize: 15,
+    color: colors.black,
+    fontFamily: 'GothamRounded-Medium',
+  },
+  title: {
+      fontWeight: 'bold',
+      fontSize: 20,
+      color: colors.black,
+      fontFamily: 'GothamRounded-Medium',
+  },
+  others: {
+    fontSize: 15,
+    color: colors.black,
+    fontFamily: 'GothamRounded-Medium',
+  },
+  review: {
+    fontSize: 15,
+    fontWeight: 'bold',
+    color: colors.black,
+    fontFamily: 'GothamRounded-Medium',
   },
 });

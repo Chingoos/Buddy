@@ -41,7 +41,7 @@ export default class SwipeableList extends Component {
   }
   sortPrice = () =>
   {
-    console.log(this.state.data);
+
     if(this.state.sortAscPrice)
     {
       this.setState({data: this.state.data.sort(function(a, b){
@@ -62,7 +62,7 @@ export default class SwipeableList extends Component {
   }
   sortDistance = () =>
   {
-    console.log(this.state.data);
+
     if(this.state.sortAscDistance)
     {
       this.setState({data: this.state.data.sort(function(a, b){
@@ -83,7 +83,6 @@ export default class SwipeableList extends Component {
   }
   sortReview = () =>
   {
-    console.log(this.state.data);
     if(this.state.sortAscReview)
     {
       this.setState({data: this.state.data.sort(function(a, b){

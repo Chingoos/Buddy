@@ -191,7 +191,7 @@ export default class Search extends Component {
       (x, i) => i + this.state.price[0] + 1
     ).toString();
     const location = 'San Francisco, CA';
-
+    this.props.navigation.navigate("Swiper")
     if (term === '') {
       Alert.alert('Please select a food.');
     } else {

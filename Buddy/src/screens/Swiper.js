@@ -121,12 +121,18 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'stretch',
   },
   cardArea: {
     flex: 10,
-    marginTop: 30
+    marginTop: 10,
+    backgroundColor : "#0000",
+    shadowOffset: { width: 10, height: 10 },
+    shadowColor: 'black',
+    shadowOpacity: 1,
+    elevation: 3,
+
   },
   btnContainer: {
     flex: 2,

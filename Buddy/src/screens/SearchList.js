@@ -11,13 +11,19 @@ import {
   TouchableOpacity,
   ScrollView,
   FlatList,
+  TouchableHighlight,
+
 
 } from 'react-native';
 import { ENTRIES1 } from '../components/tempData';
 import SwipeList from '../components/SwipeList';
 const window = Dimensions.get('window');
 import listData from '../components/Data';
-
+export const SettingsButton = (props) => (
+  <TouchableHighlight onPress={() => props.navigate.navigate('RandomPick')}>
+    <Text> Random </Text>
+  </TouchableHighlight>
+)
 export default class SearchList extends Component {
   constructor(props){
     super(props);
@@ -27,13 +33,21 @@ export default class SearchList extends Component {
 
     };
   }
+  static navigationOptions = ({ navigation }) => ({
+
+      title: 'List',
+      headerRight: <SettingsButton navigate={navigation}/>
+
+  })
+
+
   render() {
 
     return (
 
 
 
-        <View style={styles.container}>
+      <View style={styles.container}>
         <SwipeList style={styles.list} data={this.state.data} />
       </View>
     );
@@ -47,6 +61,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   container: {
+
     flex: 1,
     backgroundColor: '#FFF',
   },

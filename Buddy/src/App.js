@@ -1,5 +1,5 @@
 import React from 'react';
-import { StatusBar, View } from 'react-native';
+import { StatusBar, View, TouchableHighlight, Text } from 'react-native';
 import { StackNavigator, createStackNavigator, SwitchNavigator } from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
@@ -9,6 +9,7 @@ import Calendar from './screens/Calendar';
 import SearchList from './screens/SearchList';
 import RandomWheel from './screens/RandomWheel';
 import Swiper from './screens/Swiper';
+import RandomPick from './screens/RandomPick';
 
 const LoginStack = createStackNavigator({
   Login: { screen: Login,
@@ -35,8 +36,10 @@ const SearchStack = createStackNavigator({
 
    }),
  },
-  SearchList: {screen: SearchList},
+  SearchList: {screen: SearchList,
+ },
   RandomWheel: {screen: RandomWheel},
+  RandomPick: {screen: RandomPick},
 });
 
 const AppNavigation = createMaterialBottomTabNavigator(
@@ -46,6 +49,7 @@ const AppNavigation = createMaterialBottomTabNavigator(
     Login: { screen: LoginStack },
     Calendar: {screen: Calendar},
     Profile: { screen: Profile },
+    RandomPick: {screen: RandomPick},
 
   },
   {
