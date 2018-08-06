@@ -1,9 +1,16 @@
-import React from 'react';
-import { StatusBar, View, TouchableHighlight, Text } from 'react-native';
-import { StackNavigator, createStackNavigator, SwitchNavigator } from 'react-navigation';
+import React, { Component } from 'react';
+import { StatusBar, View } from 'react-native';
+import {
+  StackNavigator,
+  createStackNavigator,
+  SwitchNavigator,
+} from 'react-navigation';
 import { createMaterialBottomTabNavigator } from 'react-navigation-material-bottom-tabs';
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
-import { Search, Home, Profile, Login,   } from './screens';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import configureStore from './store/store';
+import { Search, Home, Profile, Login } from './screens';
 import SignUp from './screens/SignUp';
 import Calendar from './screens/Calendar';
 import SearchList from './screens/SearchList';
@@ -13,52 +20,59 @@ import RandomPick from './screens/RandomPick';
 import BusinessSearch from './screens/BusinessSearch'
 import Business from './screens/Business'
 
+const { store, persistor } = configureStore();
+
 const HomeStack = createStackNavigator({
-  Home: { screen: Home,
-
-     navigationOptions: () => ({
-      header: null
+  Home: {
+    screen: Home,
+    navigationOptions: () => ({
+      header: null,
     }),
   },
-  BusinessSearch:  { screen: BusinessSearch,
+  BusinessSearch: {
+    screen: BusinessSearch,
     navigationOptions: () => ({
-     header: null
-   }),
- },
- Business:  { screen: Business,
-   navigationOptions: () => ({
-
-  }),
- }
+      header: null,
+    }),
+  },
+  Business: {
+    screen: Business,
+    navigationOptions: () => ({}),
+  },
 });
+
 const LoginStack = createStackNavigator({
-  Login: { screen: Login,
-
-     navigationOptions: () => ({
-      header: null
-    }),
-  },
-  SignUp:  { screen: SignUp,
+  Login: {
+    screen: Login,
     navigationOptions: () => ({
-     header: null
-   }),
-  }
-});
-const SearchStack = createStackNavigator({
-  Search: { screen: Search,
-
-     navigationOptions: () => ({
-      header: null
+      header: null,
     }),
   },
-    Swiper:  { screen: Swiper,
-      navigationOptions: () => ({
+  SignUp: {
+    screen: SignUp,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
+});
 
-     }),
-   },
-    SearchList: {screen: SearchList,
-   },
-  RandomPick: {screen: RandomPick},
+const SearchStack = createStackNavigator({
+  Search: {
+    screen: Search,
+    navigationOptions: () => ({
+      header: null,
+    }),
+  },
+  Swiper: {
+    screen: Swiper,
+    navigationOptions: () => ({}),
+  },
+  SearchList: {
+    screen: SearchList,
+  },
+  RandomPick: {
+    screen: RandomPick,
+  },
 });
 
 const AppNavigation = createMaterialBottomTabNavigator(
@@ -66,7 +80,7 @@ const AppNavigation = createMaterialBottomTabNavigator(
     Home: { screen: HomeStack },
     Search: { screen: SearchStack },
     Login: { screen: LoginStack },
-    Calendar: {screen: Calendar},
+    Calendar: { screen: Calendar },
     Profile: { screen: Profile },
   },
   {
@@ -98,39 +112,48 @@ const AppNavigation = createMaterialBottomTabNavigator(
   }
 );
 
-
-
-export default class App extends React.Component{
-  constructor(props)
-  {
+export default class App extends Component {
+  constructor(props) {
     super(props);
-    this.state = {loggedIn: true
+    this.state = {
+      loggedIn: true,
     };
   }
-
-
-
-
 
   onButtonPress = () => {
     console.log("CHANGED");
     this.setState({
       loggedIn: true
     });
-  }
-  render(){
-    if(this.state.loggedIn){
-      return(
+  };
+
+  renderComponent() {
+    if (this.state.loggedIn) {
+      return (
+        <View style={{ flex: 1 }}>
+          <StatusBar backgroundColor="white" barStyle="dark-content" />
+          <AppNavigation />
+        </View>
+      );
+    }
+    return (
       <View style={{ flex: 1 }}>
         <StatusBar backgroundColor="white" barStyle="dark-content" />
-        <AppNavigation />
+        <LoginStack action={this.onButtonPress} />
       </View>
-    )}
-    else {
-      return(<View style={{ flex: 1 }}>
+    );
+  }
+
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
         <StatusBar backgroundColor="white" barStyle="dark-content" />
-        <LoginStack action={this.onButtonPress}/>
-      </View>)
-    }
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            {this.renderComponent()}
+          </PersistGate>
+        </Provider>
+      </View>
+    );
   }
 }

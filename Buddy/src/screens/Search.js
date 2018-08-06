@@ -13,11 +13,13 @@ import { Container, Content } from 'native-base';
 import { Slider } from 'react-native-elements'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import axios from 'axios';
+import { connect } from 'react-redux';
 import SwitchSelector from '../components/SwitchSelector';
 import ToggleButton from '../components/ToggleButton'
 import FoodImages from '../assets/FoodImages';
 import Profile from './Profile'
 import colors from '../styles/colors';
+import { test } from '../actions/testActions';
 
 const options = [
   { label: 'All', value: '1' },
@@ -124,7 +126,7 @@ const defaultState = {
   bar: false,
 };
 
-export default class Search extends Component {
+class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -291,6 +293,9 @@ export default class Search extends Component {
         />
       </View>
       <View style={styles.slider}>
+        <TouchableOpacity onPress={() => this.props.test()}>
+          <Text>Hi</Text>
+        </TouchableOpacity>
         <Text style={styles.font}>{this.state.distanceString}</Text>
         <MultiSlider
           values={[this.state.distance[0], this.state.distance[1]]}
@@ -332,7 +337,7 @@ export default class Search extends Component {
       <View style={styles.container}>
         {this.renderHeader()}
         <FlatList
-          style={{ flex: 1, marginBottom: 70, padding: 15, paddingBottom: 0 }}
+          style={{ flex: 1, padding: 15, paddingBottom: 0 }}
           contentContainerStyle={{ alignItems: 'center' }}
           data={foodList}
           keyExtractor={item => item.label}
@@ -418,3 +423,12 @@ const styles = StyleSheet.create({
     height: 2.5,
   },
 });
+
+const mapStateToProps = state => {
+  return state.test;
+};
+
+export default connect(
+  mapStateToProps,
+  { test }
+)(Search);
