@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {FlatList, StyleSheet, View, Platform, TouchableOpacity, Text} from 'react-native';
-import ListItem from '../components/ListItem';
+import ListItem from '../components/SwipeListItem';
 
 export default class SwipeableList extends Component {
   constructor(props) {

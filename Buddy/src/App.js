@@ -10,7 +10,27 @@ import SearchList from './screens/SearchList';
 import RandomWheel from './screens/RandomWheel';
 import Swiper from './screens/Swiper';
 import RandomPick from './screens/RandomPick';
+import BusinessSearch from './screens/BusinessSearch'
+import Business from './screens/Business'
 
+const HomeStack = createStackNavigator({
+  Home: { screen: Home,
+
+     navigationOptions: () => ({
+      header: null
+    }),
+  },
+  BusinessSearch:  { screen: BusinessSearch,
+    navigationOptions: () => ({
+     header: null
+   }),
+ },
+ Business:  { screen: Business,
+   navigationOptions: () => ({
+
+  }),
+ }
+});
 const LoginStack = createStackNavigator({
   Login: { screen: Login,
 
@@ -31,26 +51,23 @@ const SearchStack = createStackNavigator({
       header: null
     }),
   },
-  Swiper:  { screen: Swiper,
-    navigationOptions: () => ({
+    Swiper:  { screen: Swiper,
+      navigationOptions: () => ({
 
-   }),
- },
-  SearchList: {screen: SearchList,
- },
-  RandomWheel: {screen: RandomWheel},
+     }),
+   },
+    SearchList: {screen: SearchList,
+   },
   RandomPick: {screen: RandomPick},
 });
 
 const AppNavigation = createMaterialBottomTabNavigator(
   {
-    Home: { screen: Home },
+    Home: { screen: HomeStack },
     Search: { screen: SearchStack },
     Login: { screen: LoginStack },
     Calendar: {screen: Calendar},
     Profile: { screen: Profile },
-    RandomPick: {screen: RandomPick},
-
   },
   {
     navigationOptions: ({ navigation }) => ({

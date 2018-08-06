@@ -7,6 +7,7 @@ import {
   Animated,
   Dimensions,
   Image,
+  TouchableHighlight
 } from 'react-native';
 import checkIcon from '../assets/images/checked.png';
 import cancelIcon from '../assets/images/x.png';
@@ -21,7 +22,11 @@ import {ENTRIES1} from '../components/tempData';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-
+export const ToList = (props) => (
+  <TouchableHighlight onPress={() => props.navigate.navigate('SearchList')}>
+    <Text> List </Text>
+  </TouchableHighlight>
+)
 const getCards = () => {
   const cards = ENTRIES1
   let lastItemPosition = false;
@@ -43,7 +48,12 @@ export default class Swiper extends React.Component {
 
     this.state = {cards};
   }
+  static navigationOptions = ({ navigation }) => ({
 
+      title: 'Swipe',
+      headerRight: <ToList navigate={navigation}/>
+
+  })
   onCardSwiped = (key) => {
     this.setState(prevState => {
       const swipedIndex = prevState.cards.findIndex(card => card.key === key);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView, Platform, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Platform, StyleSheet, TouchableOpacity } from 'react-native';
 import { Header, Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/SimpleLineIcons';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,6 +11,10 @@ import { sliderWidth, itemWidth } from '../styles/sliderStyle';
 import { ENTRIES1 } from '../components/tempData';
 
 export default class Home extends Component {
+  constructor(props)
+  {
+    super(props);
+  }
   _renderItem({ item, index }) {
     return <SliderEntry data={item} even={(index + 1) % 2 === 0} />;
   }
@@ -25,10 +29,13 @@ export default class Home extends Component {
           noShadow="false"
           searchBar
           rounded
+          onPress
         >
           <Item>
             <Icon name="magnifier" size={20} style={{ paddingRight: 15 }} />
-            <Input placeholder="Search" placeholderTextColor={'#bfbfbf'} style={{ color: 'black', fontFamily: 'GothamRounded-Medium' }} />
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('BusinessSearch')} style={{flex:1,}}>
+              <Text   style={{ fontSize: 17,  color: '#bfbfbf', fontFamily: 'GothamRounded-Medium' }}> Search </Text>
+            </TouchableOpacity>
           </Item>
         </Header>
         <View style={styles.titleContainer}>
@@ -43,11 +50,12 @@ export default class Home extends Component {
             containerCustomStyle={styles.slider}
             contentContainerCustomStyle={styles.sliderContentContainer}
             layout="stack"
+            layoutCardOffset={`18`}
             loop
           />
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Recommended</Text>
+          <Text style={styles.title}>Recently Viewed</Text>
         </View>
         <View style={{ borderWidth: 0 }}>
           <Carousel
@@ -57,7 +65,7 @@ export default class Home extends Component {
             itemWidth={itemWidth}
             containerCustomStyle={styles.slider}
             contentContainerCustomStyle={styles.sliderContentContainer}
-            layout="stack"
+            layout="default"
             loop
           />
         </View>
@@ -77,10 +85,10 @@ const styles = StyleSheet.create({
     backgroundColor: colors.background,
   },
   titleContainer: {
-    padding: 15,
+    padding: 10,
   },
   title: {
-    fontSize: 30,
+    fontSize: 25,
     color: 'black',
     fontFamily: 'GothamRounded-Medium',
   },

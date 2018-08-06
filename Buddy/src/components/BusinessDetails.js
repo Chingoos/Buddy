@@ -98,6 +98,11 @@ export default class BusinessDetails extends Component {
                    <Icon name="calendar" color='white' size={35} style={{ paddingRight:1 }} />
                   </View>
                 </TouchableHighlight>
+                <TouchableHighlight style={styles.buttonReview}>
+                  <View>
+                   <Icon name="star" color='white' size={35} style={{ paddingRight:1 }} />
+                  </View>
+                </TouchableHighlight>
               </View>
             </View>
           </View>
@@ -178,6 +183,24 @@ const styles = StyleSheet.create({
        height:55,
        marginLeft:5,
        backgroundColor:colors.accent,
+       borderRadius:100,
+       shadowColor: 'rgba(0,0,0, .4)', // IOS
+       shadowOffset: { height: 1, width: 1 }, // IOS
+       shadowOpacity: 1, // IOS
+       shadowRadius: 2, // IOS
+       elevation: 5, // Android
+
+  },
+  buttonReview:
+  {
+    borderWidth:1,
+       borderColor:'transparent',
+       alignItems:'center',
+       justifyContent:'center',
+       width:55,
+       height:55,
+       marginLeft:5,
+       backgroundColor:'red',
        borderRadius:100,
        shadowColor: 'rgba(0,0,0, .4)', // IOS
        shadowOffset: { height: 1, width: 1 }, // IOS

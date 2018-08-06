@@ -4,13 +4,19 @@ import {
   Text,
   StyleSheet,
   Dimensions,
-  ScrollView
+  ScrollView,
+  TouchableHighlight
 } from 'react-native';
 const timer = require('react-native-timer');
 import BusinessDetails from '../components/BusinessDetails'
 import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
 import {ENTRIES1} from '../components/tempData';
 const {width} = Dimensions.get('window');
+export const SearchAgainButton = (props) => (
+  <TouchableHighlight onPress={() => props.navigate.navigate('Search')}>
+    <Text> Search Again </Text>
+  </TouchableHighlight>
+)
 export default class RandomPick extends Component {
   constructor(props){
     super(props);
@@ -19,6 +25,13 @@ export default class RandomPick extends Component {
       item: null,
     };
   }
+  static navigationOptions = ({ navigation }) => ({
+
+      title: 'Random Pick',
+      headerRight: <SearchAgainButton navigate={navigation}/>
+
+  })
+
   componentWillUnmount() {
     timer.clearTimeout(this);
   }

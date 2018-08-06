@@ -9,7 +9,7 @@ function wp (percentage) {
     return Math.round(value);
 }
 
-const slideHeight = viewportHeight * 0.36;
+const slideHeight = viewportHeight * 0.3;
 const slideWidth = wp(75);
 const itemHorizontalMargin = wp(2);
 
@@ -23,7 +23,7 @@ export default StyleSheet.create({
         width: itemWidth,
         height: slideHeight,
         paddingHorizontal: itemHorizontalMargin,
-        // paddingBottom: 18 // needed for shadow
+        //paddingBottom: 18 // needed for shadow
     },
     shadow: {
         position: 'absolute',
@@ -32,6 +32,7 @@ export default StyleSheet.create({
         right: itemHorizontalMargin,
         bottom: 18,
         shadowColor: colors.black,
+        elevation: 4,
         shadowOpacity: 0.25,
         shadowOffset: { width: 0, height: 10 },
         shadowRadius: 10,
@@ -68,8 +69,8 @@ export default StyleSheet.create({
     },
     textContainer: {
         justifyContent: 'center',
-        paddingTop: 20 - entryBorderRadius,
-        paddingBottom: 20,
+        paddingTop: 10 - entryBorderRadius,
+        paddingBottom: 25,
         paddingHorizontal: 16,
         backgroundColor: 'white',
         borderBottomLeftRadius: entryBorderRadius,
@@ -87,7 +88,6 @@ export default StyleSheet.create({
         color: 'white'
     },
     subtitle: {
-        marginTop: 6,
         fontSize: 12,
         color: colors.gray,
         fontFamily: 'GothamRounded-Medium',
@@ -99,5 +99,41 @@ export default StyleSheet.create({
     },
     subtitleEven: {
         color: 'rgba(255, 255, 255, 0.7)'
+    },
+    button:
+    {
+      borderWidth:1,
+         borderColor:'transparent',
+         alignItems:'center',
+         justifyContent:'center',
+         width:40,
+         height:40,
+         marginLeft:3,
+         backgroundColor:colors.accent,
+         borderRadius:100,
+         shadowColor: 'rgba(0,0,0, .4)', // IOS
+         shadowOffset: { height: 1, width: 1 }, // IOS
+         shadowOpacity: 1, // IOS
+         shadowRadius: 2, // IOS
+         elevation: 5, // Android
+
+    },
+    buttonReview:
+    {
+      borderWidth:1,
+         borderColor:'transparent',
+         alignItems:'center',
+         justifyContent:'center',
+         width:40,
+         height:40,
+         marginLeft:3,
+         backgroundColor:'red',
+         borderRadius:100,
+         shadowColor: 'rgba(0,0,0, .4)', // IOS
+         shadowOffset: { height: 1, width: 1 }, // IOS
+         shadowOpacity: 1, // IOS
+         shadowRadius: 2, // IOS
+         elevation: 5, // Android
+
     }
 });
