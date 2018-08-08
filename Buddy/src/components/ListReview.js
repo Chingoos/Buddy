@@ -3,43 +3,43 @@ import {View, Text, StyleSheet, Animated, Dimensions, PanResponder, Platform, Im
 
 const {width} = Dimensions.get('window');
 import colors from '../styles/colors'
-export default class ListItem extends React.PureComponent {
+export default class ListReview extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state={
       item: this.props.item,
     };
   }
-
-
-
   render() {
     const item = this.state.item;
 
     return (
       <TouchableOpacity onPress={() => this.props.navigation.navigate(
-               'Business', {data: item, title: item.title}
+               'Review', {data: item, title: item.restaurant}
             )}
           style={styles.listItem}>
-          <View style={styles.absoluteCell}>
-            <Text style={styles.absoluteCellText}>DELETE</Text>
-          </View>
           <View style={styles.row}>
-            <Image source={{uri: this.state.item.illustration}} style={styles.image} />
-            <View style = {styles.textContainer}>
-              <Text style={styles.title}> {this.state.item.title} </Text>
-              <View style={{flexDirection: 'row',}}>
+          <Image source={{uri: this.state.item.image}} style={styles.image} />
+          <View style = {styles.textContainer}>
+            <View style={{flexDirection: 'row',}}>
+
+              <Text style={styles.titleText}> {this.state.item.restaurant} </Text>
+              <View style={{right: 0, position: "absolute"}}>
+                <Text style={styles.category}> {this.state.item.date} </Text>
+              </View>
+            </View>
+
+            <View style={{flexDirection: 'row',}}>
+
               <Text style={styles.category}> {this.state.item.category} </Text>
               <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.category}> {this.state.item.price} </Text>
+                <Text style={styles.category}> {this.state.item.rating} </Text>
               </View>
             </View>
             <View style={{flexDirection: 'row',}}>
 
-              <Text style={styles.category}> {this.state.item.distance} </Text>
-              <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.category}> {this.state.item.review} </Text>
-              </View>
+              <Text numberOfLines={1} style={styles.category}> {this.state.item.review} </Text>
+
             </View>
           </View>
         </View>
@@ -79,12 +79,12 @@ const styles = StyleSheet.create({
   },
   row: {
     width: width,
-    marginLeft: 95,
+    marginLeft: 100,
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 15,
-    height: 60,
+    padding: 10,
+    height: 80,
 
     marginTop: 2,
     marginBottom: 2,
@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   },
   titleText: {
     //fontWeight: 'bold',
-    fontSize: 20,
+    fontSize: 19,
     color: 'black',
     fontFamily: 'GothamRounded-Medium'
   },
@@ -140,10 +140,10 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   image: {
-    width: 60,
-    height: 60,
-    marginRight: 5,
-    borderRadius: 30,
+    width: 50,
+    height: 50,
+    marginRight: 15,
+    borderRadius: 25,
   },
   textContainer:
   {

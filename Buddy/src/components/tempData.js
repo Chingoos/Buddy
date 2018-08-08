@@ -68,3 +68,24 @@ export const ENTRIES1 = [
         isActive: false
     }
 ];
+export const ENTRIES2 = [
+    {
+        restaurant: 'Four Barrel Coffee ',
+        category:'Coffee',
+        rating: '4/5',
+        image: 'http://s3-media2.fl.yelpcdn.com/bphoto/MmgtASP3l_t4tPCL1iAsCg/o.jpg',
+        date: '3 days ago',
+        review: 'Amazing service and atmosphere, reasonable prices, and good food. Highly recommend.'
+
+    },
+    {
+        restaurant: 'Kaiser Don',
+        category:'Japanese',
+        rating: '4/5',
+        image: 'https://s3-media1.fl.yelpcdn.com/bphoto/g3D1pubyCUpxSGMN41593w/o.jpg',
+        date: '1 month ago',
+        review: 'Good value, nice atmosphere, yummy food...parking is limited'
+
+    },
+
+];

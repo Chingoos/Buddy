@@ -31,14 +31,6 @@ export default class BusinessSearch extends Component {
       <ListItem
         navigation={this.props.navigation}
         item={item}
-        title={item.title}
-        price={item.price}
-        review={item.review}
-        category={item.category}
-        distance={item.distance}
-        image={item.illustration}
-        success={this.success}
-        text={item.key}
       />
     );
   }

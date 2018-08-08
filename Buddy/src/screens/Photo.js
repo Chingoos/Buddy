@@ -1,36 +1,28 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import {
   View,
   Text,
   StyleSheet,
+  Image,
   Dimensions,
-  ScrollView,
-  TouchableHighlight,
-  Platform
+  Platform,
 } from 'react-native';
+import colors from '../styles/colors';
 import { Header, Item, Input } from 'native-base';
 import Icon from 'react-native-vector-icons/dist/SimpleLineIcons';
-import colors from '../styles/colors';
-import BusinessDetails from '../components/BusinessDetails'
-import {ENTRIES1} from '../components/tempData';
-const {width} = Dimensions.get('window');
-
-
-export default class Business extends Component {
+const {width, height} = Dimensions.get('window');
+export default class Photo extends Component {
   constructor(props){
     super(props);
-    this.state ={
-      title: this.props.navigation.state.params.title,
-      item: this.props.navigation.state.params.data,
+    this.state={
+      data: this.props.navigation.state.params.data,
+      title:  this.props.navigation.state.params.title,
     };
   }
 
-
   render() {
-
-    const item = this.state.item;
     return (
-      <View style={ { flex: 1,  backgroundColor: colors.background,}}>
+      <View style={styles.container}>
         <Header
           style={styles.header}
           androidStatusBarColor="white"
@@ -44,34 +36,30 @@ export default class Business extends Component {
             <Text   style={{ fontSize: 20,  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
           </Item>
         </Header>
-        <View style={styles.container}>
-
-          <BusinessDetails {...item}/>
+        <View style={styles.imageContainer}>
+          <Image resizeMode={'contain'} source={{uri: this.state.data.illustration}} style={styles.image}/>
         </View>
       </View>
     );
-
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  imageContainer:{
     flex:1,
-    backgroundColor: "#FFF",
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  scroll: {
-
-    backgroundColor: "#FFF",
+    justifyContent: 'center',
+    alignSelf: 'stretch',
 
   },
-  bars:
-  {
-    alignSelf: 'center',
-    justifyContent:"flex-start",
-    alignItems: 'center',
-    position:"absolute",
+  image: {
+    width: width,
+    height: height-100,
+
+
   },
   header: {
     borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,

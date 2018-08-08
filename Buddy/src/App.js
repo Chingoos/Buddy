@@ -12,7 +12,8 @@ import Swiper from './screens/Swiper';
 import RandomPick from './screens/RandomPick';
 import BusinessSearch from './screens/BusinessSearch'
 import Business from './screens/Business'
-
+import Photo from './screens/Photo'
+import Review from './screens/Review'
 const HomeStack = createStackNavigator({
   Home: { screen: Home,
 
@@ -27,7 +28,7 @@ const HomeStack = createStackNavigator({
  },
  Business:  { screen: Business,
    navigationOptions: () => ({
-
+     header: null
   }),
  }
 });
@@ -60,14 +61,36 @@ const SearchStack = createStackNavigator({
    },
   RandomPick: {screen: RandomPick},
 });
+const ProfileStack = createStackNavigator({
+  Profile: { screen: Profile,
 
+     navigationOptions: () => ({
+      header: null
+    }),
+  },
+  Business:  { screen: Business,
+     navigationOptions: () => ({
+       header: null
+    }),
+  },
+  Photo:  { screen: Photo,
+    navigationOptions: () => ({
+      header: null
+     }),
+   },
+   Review:  { screen: Review,
+     navigationOptions: () => ({
+       header: null
+      }),
+    },
+});
 const AppNavigation = createMaterialBottomTabNavigator(
   {
     Home: { screen: HomeStack },
     Search: { screen: SearchStack },
     Login: { screen: LoginStack },
     Calendar: {screen: Calendar},
-    Profile: { screen: Profile },
+    Profile: { screen: ProfileStack },
   },
   {
     navigationOptions: ({ navigation }) => ({
