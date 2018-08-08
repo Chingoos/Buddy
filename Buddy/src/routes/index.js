@@ -9,104 +9,51 @@ import { createMaterialBottomTabNavigator } from 'react-navigation-material-bott
 import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
-import configureStore from './store/store';
-import { Search, Home, Profile, Login } from './screens';
-import SignUp from './screens/SignUp';
-import Calendar from './screens/Calendar';
-import SearchList from './screens/SearchList';
-import RandomWheel from './screens/RandomWheel';
-import Swiper from './screens/Swiper';
-import RandomPick from './screens/RandomPick';
-import BusinessSearch from './screens/BusinessSearch'
-import Business from './screens/Business'
-import Photo from './screens/Photo'
-import Review from './screens/Review'
+import configureStore from '../store/store'
+import { Search, Home, Profile, Login } from '../screens';
+import SignUp from '../screens/SignUp';
+import Calendar from '../screens/Calendar';
+import SearchList from '../screens/SearchList';
+import RandomWheel from '../screens/RandomWheel';
+import Swiper from '../screens/Swiper';
 
-const { store, persistor } = configureStore();
+const LoginStack = createStackNavigator({
+  Login: { screen: Login,
 
-const HomeStack = createStackNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: () => ({
-      header: null,
+     navigationOptions: () => ({
+      header: null
     }),
   },
-  BusinessSearch: {
-    screen: BusinessSearch,
+  SignUp:  { screen: SignUp,
     navigationOptions: () => ({
      header: null
    }),
- },
- Business:  { screen: Business,
-   navigationOptions: () => ({
-     header: null
-  }),
- }
+  }
 });
-
-const LoginStack = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: () => ({
-      header: null,
-    }),
-  },
-  SignUp: {
-    screen: SignUp,
-    navigationOptions: () => ({
-      header: null,
-    }),
-  },
-});
-
 const SearchStack = createStackNavigator({
-  Search: {
-    screen: Search,
-    navigationOptions: () => ({
-      header: null,
-    }),
-  },
-  Swiper: {
-    screen: Swiper,
-    navigationOptions: () => ({}),
-  },
-  SearchList: {
-    screen: SearchList,
-  },
-  RandomPick: {
-    screen: RandomPick,
-  },
-});
-const ProfileStack = createStackNavigator({
-  Profile: { screen: Profile,
+  Search: { screen: Search,
 
      navigationOptions: () => ({
       header: null
     }),
   },
-  Business:  { screen: Business,
-     navigationOptions: () => ({
-       header: null
-    }),
-  },
-  Photo:  { screen: Photo,
+  Swiper:  { screen: Swiper,
     navigationOptions: () => ({
-      header: null
-     }),
-   },
-   Review:  { screen: Review,
-     navigationOptions: () => ({
-       header: null
-      }),
-    },
+
+   }),
+ },
+  SearchList: {screen: SearchList},
+  RandomWheel: {screen: RandomWheel},
 });
+
 const AppNavigation = createMaterialBottomTabNavigator(
   {
-    Home: { screen: HomeStack },
+    Home: { screen: Home },
     Search: { screen: SearchStack },
     Login: { screen: LoginStack },
     Calendar: {screen: Calendar},
-    Profile: { screen: ProfileStack },
+    Profile: { screen: Profile },
+
   },
   {
     navigationOptions: ({ navigation }) => ({
@@ -171,14 +118,13 @@ export default class App extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <StatusBar backgroundColor="white" barStyle="dark-content" />
-        <Provider store={store}>
-          <PersistGate loading={null} persistor={persistor}>
-            {this.renderComponent()}
-          </PersistGate>
-        </Provider>
-      </View>
+      <Provider store={store}>
+        {/* <PersistGate loading={null} persistor={persistor}> */}
+          {this.renderComponent()}
+        {/* </PersistGate> */}
+      </Provider>
     );
   }
 }
+
+let { store, persistor } = configureStore();
