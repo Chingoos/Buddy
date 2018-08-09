@@ -68,13 +68,21 @@ const SearchStack = createStackNavigator({
   },
   Swiper: {
     screen: Swiper,
-    navigationOptions: () => ({}),
+    navigationOptions: () => ({
+      header: null,
+    }),
   },
   SearchList: {
     screen: SearchList,
+    navigationOptions: () => ({
+      header: null,
+    }),
   },
   RandomPick: {
     screen: RandomPick,
+    navigationOptions: () => ({
+      header: null,
+    }),
   },
 });
 const ProfileStack = createStackNavigator({

@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {FlatList, StyleSheet, View, Platform, TouchableOpacity, Text} from 'react-native';
 import ListItem from '../components/SwipeListItem';
-
+import Icon from 'react-native-vector-icons/dist/FontAwesome'
+import colors from '../styles/colors';
 export default class SwipeableList extends Component {
   constructor(props) {
     super(props);
@@ -11,7 +12,7 @@ export default class SwipeableList extends Component {
 
     this.state = {
       enable: true,
-      data: this.props.data,
+      data: this.getData(),
       sortAscTitle: true,
       sortAscPrice: true,
       sortAscDistance: true,
@@ -19,21 +20,28 @@ export default class SwipeableList extends Component {
 
     };
   }
+  getData(){
+    const cards = this.props.data;
+    cards.forEach((card, i) => {
+      card.key = card.id
+    });
+    return cards;
+  }
   sortTitle = () =>
   {
     if(this.state.sortAscPrice)
     {
       this.setState({data: this.state.data.sort(function(a, b){
-      if(a.title > b.title) return -1;
-      if(a.title < b.title) return 1;
+      if(a.name > b.name) return -1;
+      if(a.name < b.name) return 1;
       return 0;
       }) })
       this.setState({sortAscPrice: false})
     }
     else {
       this.setState({data: this.state.data.sort(function(a, b){
-      if(a.title < b.title) return -1;
-      if(a.title > b.title) return 1;
+      if(a.name < b.name) return -1;
+      if(a.name > b.name) return 1;
       return 0;
       }) })
       this.setState({sortAscPrice: true})
@@ -86,16 +94,16 @@ export default class SwipeableList extends Component {
     if(this.state.sortAscReview)
     {
       this.setState({data: this.state.data.sort(function(a, b){
-      if(a.title > b.review) return -1;
-      if(a.title < b.review) return 1;
+      if(a.rating > b.rating) return -1;
+      if(a.rating < b.rating) return 1;
       return 0;
       }) })
       this.setState({sortAscReview: false})
     }
     else {
       this.setState({data: this.state.data.sort(function(a, b){
-      if(a.title < b.review) return -1;
-      if(a.title > b.review) return 1;
+      if(a.rating < b.rating) return -1;
+      if(a.rating > b.rating) return 1;
       return 0;
       }) })
       this.setState({sortAscReview: true})
@@ -125,12 +133,12 @@ export default class SwipeableList extends Component {
   renderItem(item) {
     return (
       <ListItem
-        title={item.title}
+        title={item.name}
         price={item.price}
-        review={item.review}
-        category={item.category}
-        distance={item.distance}
-        image={item.illustration}
+        review={item.rating}
+        category={item.categories[0].title}
+        distance={(Math.round(item.distance*0.000621371*100)/100)}
+        image={item.image_url}
         success={this.success}
         text={item.key}
         setScrollEnabled={enable => this.setScrollEnabled(enable)}
@@ -143,7 +151,7 @@ export default class SwipeableList extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{flexDirection: 'row'}}>
+        <View style={styles.header}>
           <TouchableOpacity
             shadowOpacity={0.5}
             shadowRadius={10}
@@ -176,6 +184,7 @@ export default class SwipeableList extends Component {
           >
             <Text style={styles.font}>Review</Text>
           </TouchableOpacity>
+          <Icon onPress={() => this.props.navigation.navigate('RandomPick', {data: this.state.data})} name="question-square" size={20} color={'black'} style={{ position: 'absolute', right: 15, pddingTop:10 }} />
         </View>
         <FlatList
           style={this.props.style}
@@ -207,17 +216,19 @@ row: {
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 15,
-    height: 30,
-    marginTop: 2,
-    marginBottom: 2,
-    borderRadius: 4,
+    marginRight: 15,
 
   },
   font: {
     //fontWeight: 'bold',
-    fontSize: 15,
+    fontSize: 20,
     color: 'black',
     fontFamily: 'GothamRounded-Medium'
   },
+  header:{
+    borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
+    borderBottomColor: colors.accent,
+    backgroundColor: colors.background,
+    flexDirection: 'row', paddingLeft: 10
+  }
 });

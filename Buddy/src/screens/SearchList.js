@@ -17,28 +17,20 @@ import {
 } from 'react-native';
 import { ENTRIES1 } from '../components/tempData';
 import SwipeList from '../components/SwipeList';
+import { Header, Item, Input } from 'native-base';
+import Icon from 'react-native-vector-icons/dist/SimpleLineIcons';
 const window = Dimensions.get('window');
 import listData from '../components/Data';
-export const RandomButton = (props) => (
-  <TouchableHighlight onPress={() => props.navigate.navigate('RandomPick')}>
-    <Text> Random </Text>
-  </TouchableHighlight>
-)
+import colors from '../styles/colors';
 export default class SearchList extends Component {
   constructor(props){
     super(props);
     this.state = {
-      data : ENTRIES1,
+      data : props.navigation.state.params.data,
       sortAsc: true,
 
     };
   }
-  static navigationOptions = ({ navigation }) => ({
-
-      title: 'List',
-      headerRight: <RandomButton navigate={navigation}/>
-
-  })
 
 
   render() {
@@ -48,7 +40,7 @@ export default class SearchList extends Component {
 
 
       <View style={styles.container}>
-        <SwipeList style={styles.list} data={this.state.data} />
+        <SwipeList style={styles.list} data={this.state.data} navigation ={this.props.navigation} />
       </View>
     );
   }
@@ -108,5 +100,10 @@ const styles = StyleSheet.create({
   separatorStyle: {
     height: 1,
     backgroundColor: '#000',
+  },
+  header: {
+    borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
+    borderBottomColor: colors.accent,
+    backgroundColor: colors.background,
   },
 });

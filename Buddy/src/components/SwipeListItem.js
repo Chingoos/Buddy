@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
-    padding: 15,
+    padding: 7,
     height: 60,
 
     marginTop: 2,
@@ -178,10 +178,10 @@ const styles = StyleSheet.create({
     marginLeft: 5
   },
   image: {
-    width: 50,
-    height: 50,
-    marginRight: 15,
-    borderRadius: 25,
+    width: 60,
+    height: 60,
+    marginRight: 7,
+    borderRadius: 30,
   },
   textContainer:
   {

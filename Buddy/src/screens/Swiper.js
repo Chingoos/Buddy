@@ -7,10 +7,13 @@ import {
   Animated,
   Dimensions,
   Image,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
-import checkIcon from '../assets/images/checked.png';
-import cancelIcon from '../assets/images/x.png';
+import { Header, Item, Input } from 'native-base';
+import IconB from 'react-native-vector-icons/dist/SimpleLineIcons';
+import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import colors from '../styles/colors';
 import Card from "../components/Card";
 import img1 from '../assets/images/image1.jpeg';
 import img2 from '../assets/images/image2.jpeg';
@@ -22,15 +25,17 @@ import {ENTRIES1} from '../components/tempData';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const SCREEN_WIDTH = Dimensions.get('window').width;
-export const ToList = (props) => (
-  <TouchableHighlight onPress={() => props.navigate.navigate('SearchList')}>
-    <Text> List </Text>
-  </TouchableHighlight>
-)
-const getCards = () => {
-  const cards = ENTRIES1
+
+const getCards = (props) => {
+  const cards = props.navigation.state.params.data.businesses
   let lastItemPosition = false;
   cards.forEach((card, i) => {
+    if(i==0){
+      card.isActive = true;
+    }
+    else {
+      card.isActive = false;
+    }
     const position = new Animated.ValueXY();
     card.position = position;
     card.parentPosition = lastItemPosition;
@@ -41,22 +46,27 @@ const getCards = () => {
 
 export default class Swiper extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    const cards = getCards();
-
-    this.state = {cards};
+    const cards = getCards(props);
+    const liked = [];
+    this.state = {
+      cards,
+      title: cards[cards.findIndex(card => card.isActive)].name,
+      liked,
+    };
   }
-  static navigationOptions = ({ navigation }) => ({
 
-      title: 'Swipe',
-      headerRight: <ToList navigate={navigation}/>
+  onCardSwiped = (id) => {
+    if(((this.state.cards.findIndex(card => card.isActive)) +1)!=this.state.cards.length)
+    {
+      name = this.state.cards[(this.state.cards.findIndex(card => card.isActive)) +1 ].name;
+      this.setState({title: name});
+    }
 
-  })
-  onCardSwiped = (key) => {
     this.setState(prevState => {
-      const swipedIndex = prevState.cards.findIndex(card => card.key === key);
+      const swipedIndex = prevState.cards.findIndex(card => card.id === id);
       const isLastIndex = swipedIndex === (prevState.cards.length - 1);
       const nextIndex = swipedIndex + 1;
       const newState = {...prevState};
@@ -65,36 +75,57 @@ export default class Swiper extends React.Component {
       newState.cards[nextIndex]['isActive'] = true;
       return newState;
     });
+
+
   }
 
   handleLikeSelect = (dy=0, position=false) => {
     const activeIndex = this.state.cards.findIndex(card => card.isActive);
+
     if (activeIndex < 0) return;
     if (!position) {
       position = this.state.cards[activeIndex].position;
     }
     Animated.spring(position, {
       toValue: { x: SCREEN_WIDTH + 100, y: dy }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].key));
+    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
   }
 
   handleNopeSelect = (dy=0, position=false) => {
     const activeIndex = this.state.cards.findIndex(card => card.isActive);
+    this.setState({
+      liked:  this.state.liked.concat(activeIndex)
+    });
+    console.log(this.state.liked);
     if (activeIndex < 0) return;
     if (!position) {
       position = this.state.cards[activeIndex].position;
     }
     Animated.spring(position, {
       toValue: { x: -SCREEN_WIDTH - 100, y: dy }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].key));
+    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
+
+
+
   }
+  filterCards(){
+    var cards = this.props.navigation.state.params.data.businesses;
+    const array = this.state.liked.reverse();
+    for(var a = 0; a<array.length;a++)
+    {
+      cards.splice(array[a],1);
 
+    }
+    this.props.navigation.navigate('SearchList', {data: cards});
+  }
   renderCards = (cards) => {
-    if (this.isEmptyState()) {this.props.navigation.navigate("SearchList")}
 
+    if (this.isEmptyState()) {this.filterCards(); }
     return cards.map((card, index) => {
-      return <Card key={card.key} {...card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
+      return <Card id={card.id} {...card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
     }).reverse();
+
+
   }
 
   reloadCards = () => {
@@ -107,20 +138,37 @@ export default class Swiper extends React.Component {
   }
 
   render() {
+
     return (
       <View style={styles.container} >
+        <Header
+          style={styles.header}
+          androidStatusBarColor="white"
+          iosBarStyle="dark-content"
+          noShadow="false"
+          rounded
+          onPress
+          searchBar
+        >
+          <Item>
+            
+            <Text   style={{ fontSize: 20,  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
+            <Icon onPress={() => this.filterCards()} name="list" size={20} style={{ position: 'absolute', right: 15 }} />
+          </Item>
+        </Header>
         <View style={styles.cardArea} >
           {this.renderCards(this.state.cards)}
-        </View>
-        <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()} >
-            <Image source={cancelIcon} style={styles.btnIcon} />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()} >
-            <Image source={checkIcon} style={styles.btnIcon} />
-          </TouchableOpacity>
+          <View style={styles.btnContainer}>
+            <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()} >
+              <Icon name="times" size={32} style={{ color: 'red' }} />
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()} >
+              <Icon name="check" size={32} style={{ color: 'green' }} />
+            </TouchableOpacity>
 
+          </View>
         </View>
+
       </View>
     );
   }
@@ -135,8 +183,9 @@ const styles = StyleSheet.create({
     alignItems: 'stretch',
   },
   cardArea: {
-    flex: 10,
-    marginTop: 10,
+    flex: 1,
+    marginTop: 0,
+    height: SCREEN_HEIGHT*.7,
     backgroundColor : "#0000",
     shadowOffset: { width: 10, height: 10 },
     shadowColor: 'black',
@@ -150,6 +199,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: -1,
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 30,
+
+  },
+  header: {
+    borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
+    borderBottomColor: colors.accent,
+    backgroundColor: colors.background,
   },
   btn: {
     height: 70,

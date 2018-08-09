@@ -16,15 +16,15 @@ export default class BusinessDetails extends Component {
   constructor(props){
     super(props);
     this.state ={
-      image: this.props.illustration,
-      title: this.props.title,
+      image: this.props.image_url,
+      title: this.props.name,
       price: this.props.price,
-      rating: this.props.review,
-      ratingNum: this.props.ratingNum,
-      distance: this.props.distance,
-      category: this.props.category,
-      location: this.props.subtitle,
-      yelpURL: this.props.yelpURL,
+      rating: this.props.rating,
+      ratingNum: this.props.reviewCount,
+      distance: (Math.round(this.props.distance*0.000621371*100)/100),
+      category: this.props.categories[0].title,
+      location: this.props.location.address1,
+      yelpURL: this.props.url,
       phone: this.props.phone,
       pickUp: this.props.pickUp,
       delivery: this.props.delivery,
@@ -34,7 +34,7 @@ export default class BusinessDetails extends Component {
   render() {
 
     return (
-
+      <View style={styles.container}>
         <View style={styles.businessCard}>
           <Image style={styles.cardImg} source={{uri: this.state.image}}/>
           <View style = {styles.textContainer}>
@@ -107,6 +107,7 @@ export default class BusinessDetails extends Component {
             </View>
           </View>
         </View>
+      </View>
 
     );
   }
@@ -115,7 +116,8 @@ export default class BusinessDetails extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
+    alignItems:'center',
+    justifyContent:'center',
     backgroundColor: 'white',
   },
   businessCard: {
@@ -135,14 +137,16 @@ const styles = StyleSheet.create({
   cardImg: {
     borderTopLeftRadius: 15,
     borderTopRightRadius: 15,
-    height: 150,
+    height: SCREEN_HEIGHT*.2,
     width: SCREEN_WIDTH-30,
 
 
   },
   textContainer:
   {
-    padding: 15,
+    paddingTop: 5,
+    paddingLeft:15,
+    paddingRight:15,
   },
   category: {
     fontSize: 18,
@@ -151,7 +155,7 @@ const styles = StyleSheet.create({
   },
   title: {
       fontWeight: 'bold',
-      fontSize: 28,
+      fontSize: 25,
       color: colors.black,
       fontFamily: 'GothamRounded-Medium',
   },
@@ -176,19 +180,19 @@ const styles = StyleSheet.create({
   button:
   {
     borderWidth:1,
-       borderColor:'transparent',
-       alignItems:'center',
-       justifyContent:'center',
-       width:55,
-       height:55,
-       marginLeft:5,
-       backgroundColor:colors.accent,
-       borderRadius:100,
-       shadowColor: 'rgba(0,0,0, .4)', // IOS
-       shadowOffset: { height: 1, width: 1 }, // IOS
-       shadowOpacity: 1, // IOS
-       shadowRadius: 2, // IOS
-       elevation: 5, // Android
+    borderColor:'transparent',
+    alignItems:'center',
+    justifyContent:'center',
+    width:55,
+    height:55,
+    marginLeft:5,
+    backgroundColor:colors.accent,
+    borderRadius:100,
+    shadowColor: 'rgba(0,0,0, .4)', // IOS
+    shadowOffset: { height: 1, width: 1 }, // IOS
+    shadowOpacity: 1, // IOS
+    shadowRadius: 2, // IOS
+    elevation: 5, // Android
 
   },
   buttonReview:

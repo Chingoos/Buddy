@@ -193,7 +193,6 @@ class Search extends Component {
       (x, i) => i + this.state.price[0] + 1
     ).toString();
     const location = 'San Francisco, CA';
-    this.props.navigation.navigate("Swiper")
     if (term === '') {
       Alert.alert('Please select a food.');
     } else {
@@ -209,8 +208,8 @@ class Search extends Component {
           Alert.alert(
             `Success! Found ${response.data.businesses.length} results!`
           );
-          console.log(response);
-          this.props.navigation.navigate('Swiper');
+
+          this.props.navigation.navigate('Swiper', {data: response.data});
         })
        .catch(error => {
           console.log(`error ${error}`);

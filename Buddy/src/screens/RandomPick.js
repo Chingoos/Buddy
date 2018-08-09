@@ -5,12 +5,16 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
-  TouchableHighlight
+  TouchableHighlight,
+  Platform
 } from 'react-native';
 const timer = require('react-native-timer');
 import BusinessDetails from '../components/BusinessDetails'
 import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
-import {ENTRIES1} from '../components/tempData';
+import { Header, Item, Input } from 'native-base';
+import Icon from 'react-native-vector-icons/dist/SimpleLineIcons';
+import IconC from 'react-native-vector-icons/dist/MaterialCommunityIcons'
+import colors from '../styles/colors';
 const {width} = Dimensions.get('window');
 export const SearchAgainButton = (props) => (
   <TouchableHighlight onPress={() => props.navigate.navigate('Search')}>
@@ -23,6 +27,7 @@ export default class RandomPick extends Component {
     this.state ={
       count: true,
       item: null,
+      title: null,
     };
   }
   static navigationOptions = ({ navigation }) => ({
@@ -40,10 +45,15 @@ export default class RandomPick extends Component {
       this, 'count', () => this.setState({count: false}), 2000
     ));
   }
+  refresh(){
+    this.count();
+    this.random();
+  }
   random(){
-    let i = ENTRIES1.length -1;
+    let i = this.props.navigation.state.params.data.length -1;
     const r = Math.floor(Math.random() *  i);
-    this.setState({item: ENTRIES1[r]});
+    this.setState({item: this.props.navigation.state.params.data[r]});
+    this.setState({title: this.props.navigation.state.params.data[r].name})
   }
   componentDidMount()
   {
@@ -52,11 +62,12 @@ export default class RandomPick extends Component {
   }
   render() {
     if(this.state.count){
-      console.log(this.state.item)
       return(
         <View style={styles.container}>
-          <View style={styles.bars}>
-            <Bars size={50} color='#A4DE02' />
+          <View style = {styles.card}>
+            <View style={styles.bars}>
+              <Bars size={50} color='#A4DE02' />
+            </View>
           </View>
         </View>
       );
@@ -65,6 +76,21 @@ export default class RandomPick extends Component {
       const item = this.state.item;
       return (
         <View style={styles.container}>
+          <Header
+            style={styles.header}
+            androidStatusBarColor="white"
+            iosBarStyle="dark-content"
+            noShadow="false"
+            rounded
+            onPress
+            searchBar
+          >
+            <Item>
+              <IconC onPress={() => this.refresh()} name="refresh" color = 'black' size={20} style={{ paddingRight: 15 }} />
+              <Text   style={{ fontSize: 20, alignItems: 'center',  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
+              <Icon onPress={() => this.props.navigation.navigate('Search')} name="magnifier" size={20} style={{ position: 'absolute', right: 15 }} />
+            </Item>
+          </Header>
 
             <BusinessDetails {...item}/>
 
@@ -78,13 +104,12 @@ const styles = StyleSheet.create({
   container: {
     flex:1,
     backgroundColor: "#FFF",
+
+  },
+  card: {
+    flex:1,
     alignItems:'center',
     justifyContent:'center',
-  },
-  scroll: {
-
-    backgroundColor: "#FFF",
-
   },
   bars:
   {
@@ -92,5 +117,10 @@ const styles = StyleSheet.create({
     justifyContent:"flex-start",
     alignItems: 'center',
     position:"absolute",
-  }
+  },
+  header: {
+    borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
+    borderBottomColor: colors.accent,
+    backgroundColor: colors.background,
+  },
 });

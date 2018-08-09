@@ -97,23 +97,24 @@ export default class Card extends React.Component {
           <Text style={[styles.cardText, styles.cardTextNope]} >Nah</Text>
         </Animated.View>
 
-        <RNImage style={styles.cardImg} source={{uri: this.props.illustration}} />
+        <RNImage style={styles.cardImg} source={{uri: this.props.image_url}} />
         <View style={styles.textContainer}>
+          <View>
             <Text style={styles.title} numberOfLines={2}>
-                { this.props.title.toUpperCase() }
+                { this.props.name.toUpperCase() }
             </Text>
             <View style={{flexDirection:'row'}}>
               <Text style={styles.etc} >
-                  { this.props.category }
+                  { this.props.categories[0].title}
               </Text>
               <View style={{right: 0, position: "absolute"}}>
                 <Text style={styles.others}> { this.props.price } </Text>
               </View>
             </View>
             <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Text style={styles.others}> { this.props.distance } </Text>
+              <Text style={styles.others}> { Math.round(this.props.distance*0.000621371*100)/100   } miles </Text>
               <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.review}> { this.props.review } </Text>
+                <Text style={styles.review}> { this.props.rating } </Text>
               </View>
 
             </View>
@@ -132,6 +133,7 @@ export default class Card extends React.Component {
               <Icon name="truck" size={25} style={{ paddingRight: 10 }} />
               <Text style={styles.others}> Delivery </Text>
             </View>
+          </View>
         </View>
 
       </Animated.View>
@@ -142,7 +144,7 @@ export default class Card extends React.Component {
 const styles = StyleSheet.create({
   cardImg: {
 
-    height: 300,
+    height: SCREEN_HEIGHT*.3,
     width: SCREEN_WIDTH,
     resizeMode: 'cover',
     borderTopLeftRadius: 15,
@@ -151,7 +153,7 @@ const styles = StyleSheet.create({
   },
   card: {
     position: 'absolute',
-    height: '100%',
+    height: '80%',
     width: SCREEN_WIDTH,
     borderRadius: 15,
     shadowColor: 'rgba(0,0,0, .4)', // IOS
@@ -225,13 +227,13 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-      justifyContent: 'center',
-      paddingTop: 12,
-      paddingBottom: 20,
-      paddingHorizontal: 16,
-      backgroundColor: 'white',
-      borderBottomLeftRadius :15,
-      borderBottomRightRadius: 15,
+
+    paddingTop: 12,
+    paddingBottom: 20,
+    paddingHorizontal: 16,
+    backgroundColor: 'white',
+    borderBottomLeftRadius :15,
+    borderBottomRightRadius: 15,
   },
   title: {
       fontWeight: 'bold',
