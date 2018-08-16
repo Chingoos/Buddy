@@ -7,6 +7,8 @@ import {
   Animated,
   PanResponder,
   View,
+  TouchableWithoutFeedback,
+  TouchableOpacity
 } from 'react-native';
 import colors from '../styles/colors'
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
@@ -22,7 +24,7 @@ export default class Card extends React.Component {
       outputRange: ['-10deg', '0deg', '10deg'],
       extrapolate: 'clamp',
     });
-    const defaultScale = this.props.isActive ? 0.9 : 0.85;
+    const defaultScale = this.props.isActive ? 0.9 : 0.9;
     this.nextCardScale = this.props.parentPosition ? this.props.parentPosition.x.interpolate({
       inputRange: [-SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2],
       outputRange: [0.9, 0.85, 0.9],
@@ -40,6 +42,16 @@ export default class Card extends React.Component {
       outputRange: [0, 0, 1],
       extrapolate: 'clamp',
     });
+    this.favoriteOpacity = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT/2, 0, SCREEN_HEIGHT/2],
+      outputRange: [1, 0, 0],
+      extrapolate: 'clamp',
+    });
+    this.blockedOpacity = this.position.y.interpolate({
+      inputRange: [-SCREEN_HEIGHT/2, 0, SCREEN_HEIGHT/2],
+      outputRange: [0, 0, 1],
+      extrapolate: 'clamp',
+    });
     this.nopeOpacity = this.position.x.interpolate({
       inputRange: [-SCREEN_WIDTH/2, 0, SCREEN_WIDTH/2],
       outputRange: [1, 0, 0],
@@ -48,8 +60,11 @@ export default class Card extends React.Component {
   }
 
   componentWillMount() {
+    this.pan = new Animated.ValueXY();
     this.PanResponder = PanResponder.create({
       onStartShouldSetPanResponder:(evt, gestureState) => this.props.isActive,
+      onMoveShouldSetPanResponder: (evt, gestureState) => this.props.isActive,
+      onPanResponderTerminationRequest: (evt, gestureState) => false,
       onPanResponderMove:(evt, gestureState) => {
         this.position.setValue({x: gestureState.dx, y: gestureState.dy});
       },
@@ -60,7 +75,16 @@ export default class Card extends React.Component {
           this.props.handleNopeSelect(gestureState.dy, this.position);
 
 
-        } else {
+        }
+        else if(gestureState.dy > 120){
+          this.props.handleBlockSelect(gestureState.dy, this.position);
+        }
+        else if(gestureState.dy < -120)
+        {
+          this.props.handleFavoriteSelect(gestureState.dy, this.position);
+
+        }
+        else {
           Animated.spring(this.position, {
             toValue: {x: 0, y: 0},
             friction: 4
@@ -72,20 +96,41 @@ export default class Card extends React.Component {
 
   render() {
     return (
-      <Animated.View {...this.PanResponder.panHandlers} // <----- This is what binds to the PanResponder's onPanResponderMove handler
-        style={[
-          this.rotateAndTranslate,
-          styles.card,
-        ]} >
+
+
+
+        <Animated.View {...this.PanResponder.panHandlers} // <----- This is what binds to the PanResponder's onPanResponderMove handler
+          style={[
+            this.rotateAndTranslate,
+            styles.card,
+          ]} >
 
         <Animated.View
-          style={[
-            styles.cardTextContainer,
-            styles.cardTextContainerLike,
+            style={[
+              styles.cardTextContainer,
+              styles.cardTextContainerLike,
             { opacity: this.likeOpacity }
           ]}
         >
-          <Text style={[styles.cardText, styles.cardTextLike]} >Sure</Text>
+          <Text style={[styles.cardText, styles.cardTextLike]} >Mmm</Text>
+        </Animated.View>
+        <Animated.View
+            style={[
+              styles.cardTextContainer,
+              styles.cardTextContainerFavorite,
+            { opacity: this.favoriteOpacity }
+          ]}
+        >
+          <Text style={[styles.cardText, styles.cardTextFavorite]} >Yum</Text>
+        </Animated.View>
+        <Animated.View
+            style={[
+              styles.cardTextContainer,
+              styles.cardTextContainerBlocked,
+            { opacity: this.blockedOpacity }
+          ]}
+        >
+          <Text style={[styles.cardText, styles.cardTextBlocked]} >Eww</Text>
         </Animated.View>
         <Animated.View
           style={[
@@ -94,49 +139,42 @@ export default class Card extends React.Component {
             { opacity: this.nopeOpacity }
           ]}
         >
-          <Text style={[styles.cardText, styles.cardTextNope]} >Nah</Text>
+          <Text style={[styles.cardText, styles.cardTextNope]} >Meh</Text>
+        </Animated.View>
+          <RNImage style={styles.cardImg} source={{uri: this.props.image_url}} />
+          <TouchableWithoutFeedback onPressIn={() => this.props.navigate.navigate(
+                   'Business', {data: this.props.data, title: this.props.data.name}    )}>
+          <View style={styles.textContainer}>
+
+              <View>
+                <Text style={styles.title} numberOfLines={2}>
+                    { this.props.name.toUpperCase() }
+                </Text>
+                <View style={{flexDirection:'row'}}>
+
+                  <Text style={styles.etc} >
+                      { this.props.categories[0].title}
+                  </Text>
+
+                  <View style={{right: 0, position: "absolute"}}>
+                    <Text style={styles.others}> { this.props.price } </Text>
+                  </View>
+                </View>
+                <View style ={{flexDirection: 'row', marginTop: 3}}>
+                  <Text style={styles.others}> { Math.round(this.props.distance*0.000621371*100)/100   } miles </Text>
+                  <View style={{right: 0, position: "absolute"}}>
+                    <Text style={styles.review}> { this.props.rating } </Text>
+                  </View>
+
+                </View>
+
+              </View>
+
+          </View>
+          </TouchableWithoutFeedback>
+
         </Animated.View>
 
-        <RNImage style={styles.cardImg} source={{uri: this.props.image_url}} />
-        <View style={styles.textContainer}>
-          <View>
-            <Text style={styles.title} numberOfLines={2}>
-                { this.props.name.toUpperCase() }
-            </Text>
-            <View style={{flexDirection:'row'}}>
-              <Text style={styles.etc} >
-                  { this.props.categories[0].title}
-              </Text>
-              <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.others}> { this.props.price } </Text>
-              </View>
-            </View>
-            <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Text style={styles.others}> { Math.round(this.props.distance*0.000621371*100)/100   } miles </Text>
-              <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.review}> { this.props.rating } </Text>
-              </View>
-
-            </View>
-            <Text style={styles.openNow} numberOfLines={2}>
-                Open Now
-            </Text>
-            <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Icon name="calendar" size={25} style={{ paddingRight: 10 }} />
-              <Text style={styles.others}> Reservation </Text>
-            </View>
-            <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Icon name="shopping-bag" size={25} style={{ paddingRight: 10 }} />
-              <Text style={styles.others}> Take Out </Text>
-            </View>
-            <View style ={{flexDirection: 'row', marginTop: 3}}>
-              <Icon name="truck" size={25} style={{ paddingRight: 10 }} />
-              <Text style={styles.others}> Delivery </Text>
-            </View>
-          </View>
-        </View>
-
-      </Animated.View>
     );
   }
 }
@@ -144,7 +182,7 @@ export default class Card extends React.Component {
 const styles = StyleSheet.create({
   cardImg: {
 
-    height: SCREEN_HEIGHT*.3,
+    height: SCREEN_HEIGHT*.65,
     width: SCREEN_WIDTH,
     resizeMode: 'cover',
     borderTopLeftRadius: 15,
@@ -153,7 +191,7 @@ const styles = StyleSheet.create({
   },
   card: {
     position: 'absolute',
-    height: '80%',
+    height: SCREEN_HEIGHT*.8,
     width: SCREEN_WIDTH,
     borderRadius: 15,
     shadowColor: 'rgba(0,0,0, .4)', // IOS
@@ -171,7 +209,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     borderWidth: 2,
-    fontSize: 30,
+    fontSize: 60,
     fontWeight: '800',
     padding: 10,
     borderRadius: 4,
@@ -182,6 +220,25 @@ const styles = StyleSheet.create({
       {rotate: '-15deg'}
     ]
 
+  },
+  cardTextContainerFavorite: {
+    top: null,
+    alignSelf: 'center',
+    bottom: 150
+
+  },
+  cardTextFavorite: {
+    color: 'gold',
+    borderColor: 'gold',
+  },
+  cardTextContainerBlocked: {
+    top: 100,
+    alignSelf: 'center',
+
+  },
+  cardTextBlocked: {
+    color: 'black',
+    borderColor: 'black',
   },
   cardTextLike: {
     color: '#4bdb79',
@@ -227,7 +284,7 @@ const styles = StyleSheet.create({
   },
   textContainer: {
     flex: 1,
-
+    height: SCREEN_HEIGHT*.1,
     paddingTop: 12,
     paddingBottom: 20,
     paddingHorizontal: 16,

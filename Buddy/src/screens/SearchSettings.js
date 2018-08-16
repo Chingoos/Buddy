@@ -8,13 +8,12 @@ import {
   Dimensions,
   FlatList,
   Alert,
-  Platform,
-  Animated
 } from 'react-native';
 import { Container, Content } from 'native-base';
 import { Slider } from 'react-native-elements'
 import MultiSlider from '@ptomasroos/react-native-multi-slider';
 import axios from 'axios';
+import Icon from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { connect } from 'react-redux';
 import SwitchSelector from '../components/SwitchSelector';
 import ToggleButton from '../components/ToggleButton'
@@ -22,16 +21,7 @@ import FoodImages from '../assets/FoodImages';
 import Profile from './Profile'
 import colors from '../styles/colors';
 import { test } from '../actions/testActions';
-import { Header, Item, Input } from 'native-base';
-import IconB from 'react-native-vector-icons/dist/SimpleLineIcons';
-import Icon from 'react-native-vector-icons/dist/FontAwesome';
-import IconC from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import EmptyState from '../components/emptyCard';
-import Card from "../components/Card";
 const {width, height} = Dimensions.get('window');
-import {ENTRIES1} from '../components/tempData';
-const SCREEN_HEIGHT = Dimensions.get('window').height;
-const SCREEN_WIDTH = Dimensions.get('window').width;
 const options = [
   { label: 'Western', value: '1' },
   { label: 'Asian', value: '1.5' },
@@ -41,7 +31,6 @@ const options2 = [
   { label: 'Food', value: '1' },
   { label: 'Cuisine', value: '2' },
 ];
-
 
 const priceRange = ['Cheap', 'Average', 'Expensive', 'Fancy'];
 const distanceRange = ['Close', 'Moderate', 'Far', 'Very Far'];
@@ -232,14 +221,7 @@ const defaultState = {
 class Search extends Component {
   constructor(props) {
     super(props);
-    const prevPosition = new Animated.ValueXY();
-    const prevprevPosition = new Animated.ValueXY()
     this.state = {
-      prevPosition,
-      prevprevPosition,
-      liked: [],
-      blocked: [],
-      data: [],
       selectedFood: '',
       burger: false,
       chicken_wing: false,
@@ -270,30 +252,9 @@ class Search extends Component {
       mexican: false,
       thai: false,
       noodles: false,
-      cards: [],
-      tempCards:[],
-      title: ''
     };
-    this.onSubmitPressed();
+  }
 
-  }
-  getCards = () => {
-    const cards = ENTRIES1;
-    let lastItemPosition = false;
-    cards.forEach((card, i) => {
-      if(i==0){
-        card.isActive = true;
-      }
-      else {
-        card.isActive = false;
-      }
-      const position = new Animated.ValueXY();
-      card.position = position;
-      card.parentPosition = lastItemPosition;
-      lastItemPosition = position;
-    });
-    return cards;
-  }
   // onSubmitPressed = () => {
   //   const foodType = this.state.selectedFood;
   //   if (foodType === '') {
@@ -325,9 +286,8 @@ class Search extends Component {
   // };
 
   onSubmitPressed = () => {
-    const term = 'anything';
+    const term = this.state.selectedFood;
     const distance = distanceSettings[this.state.distance[1]];
-    var data = [];
     const price = Array.from(
       { length: this.state.price[1] - this.state.price[0] + 1 },
       (x, i) => i + this.state.price[0] + 1
@@ -345,33 +305,17 @@ class Search extends Component {
           price,
         })
        .then(response => {
+         console.log(response);
+          Alert.alert(
+            `Success! Found ${response.data.businesses.length} results!`
+          );
 
-          const cards = response.data.businesses;
-          let lastItemPosition = false;
-          cards.forEach((card, i) => {
-            if(i==0){
-              card.isActive = true;
-            }
-            else {
-              card.isActive = false;
-            }
-            const position = new Animated.ValueXY();
-            card.position = position;
-            card.parentPosition = lastItemPosition;
-            lastItemPosition = position;
-          });
-          this.setState({cards: cards});
-          if(cards.length>0)
-          {
-            this.setState({title: cards[0].name});
-          }
+          this.props.navigation.navigate('Swiper', {data: response.data});
         })
        .catch(error => {
           console.log(`error ${error}`);
         });
     }
-
-
   };
 
   updateChoice(foodType) {
@@ -436,228 +380,6 @@ class Search extends Component {
       this.setState({foodList: false});
     }
   }
-  onCardSwiped = (id) => {
-
-
-    this.setState(prevState => {
-      const swipedIndex = prevState.cards.findIndex(card => card.id === id);
-      const isLastIndex = swipedIndex === (prevState.cards.length - 1);
-      const nextIndex = swipedIndex+1;
-      const newState = {...prevState};
-      newState.cards[swipedIndex]['isActive'] = false;
-      if (isLastIndex) return prevState;
-      newState.cards[nextIndex]['isActive'] = true;
-      const position = new Animated.ValueXY()
-      console.log(nextIndex);
-      console.log("HEYYOU");
-      newState.cards[swipedIndex].position= position.setValue({x:0,y:0})
-
-
-      return newState;
-    });
-
-  }
-  updateCards =() =>{
-    const temp = this.state.cards.slice((this.state.cards.findIndex(card => card.isActive)), (this.state.cards.findIndex(card => card.isActive))+5);
-    this.setState({tempCards: temp});
-  }
-  reloadCards = () => {
-    const cards = this.getCards();
-    this.setState({cards});
-  }
-
-  handleLikeSelect = (dy=0, position=false) => {
-    const activeIndex = this.state.cards.findIndex(card => card.isActive);
-
-
-    if (activeIndex < 0) return;
-    if (!position) {
-      position = this.state.cards[activeIndex].position;
-    }
-
-      Animated.spring(position, {
-        toValue: { x: SCREEN_WIDTH + 100, y: dy },
-        bounciness: 5,
-        speed: 8,
-      }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
-    this.setState({prevprevPosition: this.state.prevPosition.setValue({ x: 0, y: 0 })});
-    const newPosition = new Animated.ValueXY();
-    this.setState({prevprevPosition: newPosition});
-    this.setState({prevprevPosition: this.state.prevPosition});
-    this.setState({prevPosition: this.state.prevprevPosition});
-    this.setState({prevPosition: newPosition});
-    this.setState({prevPosition: position});
-    this.setState({
-      liked:  this.state.liked.concat(this.state.cards[activeIndex])
-    });
-
-
-
-  }
-  handleFavoriteSelect = (dy=0, position=false) => {
-    const activeIndex = this.state.cards.findIndex(card => card.isActive);
-    this.setState({
-      liked:  this.state.liked.concat(this.state.cards[activeIndex])
-    });
-    if (activeIndex < 0) return;
-    if (!position) {
-      position = this.state.cards[activeIndex].position;
-    }
-    Animated.spring(position, {
-      toValue: { x: 0, y: -SCREEN_HEIGHT-100 }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
-    this.setState({prevPosition: position});
-    if(activeIndex>0)
-    {
-      this.state.prevPosition.setValue({ x: 0, y: 0 });
-    }
-  }
-  handleBlockSelect = (dy=0, position=false) => {
-    const activeIndex = this.state.cards.findIndex(card => card.isActive);
-    this.setState({
-      liked:  this.state.blocked.concat(this.state.cards[activeIndex])
-    });
-    if (activeIndex < 0) return;
-    if (!position) {
-      position = this.state.cards[activeIndex].position;
-    }
-    Animated.spring(position, {
-      toValue: { x: 0, y: SCREEN_HEIGHT+100 }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
-    this.setState({prevPosition: position});
-    if(activeIndex>0)
-    {
-      this.state.prevPosition.setValue({ x: 0, y: 0 });
-    }
-  }
-
-  handleNopeSelect = (dy=0, position=false) => {
-    const activeIndex = this.state.cards.findIndex(card => card.isActive);
-
-    if (activeIndex < 0) return;
-    if (!position) {
-      position = this.state.cards[activeIndex].position;
-    }
-
-    Animated.spring(position, {
-      toValue: { x: -SCREEN_WIDTH- 100, y: dy }
-    }).start(this.onCardSwiped(this.state.cards[activeIndex].id));
-
-    this.setState({prevPosition: position});
-    if(activeIndex>0)
-    {
-      this.state.prevPosition.setValue({ x: 0, y: 0 });
-    }
-
-
-}
-  undoCard(){
-    const activeIndex = this.state.cards.findIndex(card => card.isActive);
-    if(activeIndex>0)
-    {
-      const position = this.state.prevPosition;
-      Animated.spring(position, {
-        toValue: { x: 0, y: 0 }
-      }).start();
-      this.setState(prevState => {
-        const undoIndex = activeIndex-1;
-
-        const newState = {...prevState};
-        newState.cards[activeIndex]['isActive'] = false;
-        newState.cards[undoIndex]['isActive'] = true;
-
-        return newState;
-      });
-    }
-    else {
-      Alert.alert("NO");
-    }
-  }
-
-  likedCards(){
-    if(this.state.liked.length>0)
-    {
-      this.props.navigation.navigate('SearchList', {data: this.state.liked});
-    }
-    else {
-      Alert.alert('No Liked Restaurants!');
-    }
-
-  }
-  renderCards = (cards) => {
-  //  const tempCards = this.state.tempCards;
-
-  //  console.log("HI");
-    //this.setState({tempCards:tempCards});
-  //  const newCards = this.state.cards.splice(0, 5);
-  //  this.setState({cards: newCards});
-
-  //  console.log(cards.length);
-    if (this.isEmptyState()) { }
-//    else if(tempCards.findIndex(card => card.isActive) < 0)
-  // {
-  //    for(let i =0; i< 5; i++)
-  //    {
-//        tempCards.concat(this.state.cards[i]);
-//      }
-//    }
-
-    if(this.state.cards.length>0)
-    {
-      console.log(this.state.cards.length);
-      console.log(this.state.cards[this.state.cards.findIndex(card => card.isActive)].name);
-
-
-    }
-    if(this.state.cards.findIndex(card => card.isActive) == 0)
-    {
-      console.log('ZERO');
-      return this.state.cards.slice(this.state.cards.findIndex(card => card.isActive),this.state.cards.findIndex(card => card.isActive)+3).reverse().map((card) => {
-            return <Card  {...card} navigate={this.props.navigation} data ={card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} handleFavoriteSelect={this.handleFavoriteSelect} handleBlockSelect={this.handleBlockSelect} />;
-          });
-    }
-    else if(this.state.cards.findIndex(card => card.isActive) % 2 == 1)
-    {
-        console.log('ONE');
-      return this.state.cards.slice(this.state.cards.findIndex(card => card.isActive)-1,this.state.cards.findIndex(card => card.isActive)+2).reverse().map((card, index) => {
-            return <Card id={card.id}   {...card} navigate={this.props.navigation} data ={card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} handleFavoriteSelect={this.handleFavoriteSelect} handleBlockSelect={this.handleBlockSelect} />;
-          });
-    }
-    else {
-      var activeIndex = this.state.cards.findIndex(card => card.isActive);
-
-      const tempCards = this.state.cards.slice();
-      const tempCard = tempCards[activeIndex];
-      tempCards[activeIndex] = tempCards[activeIndex-1];
-      tempCards[activeIndex-1] =  tempCard;
-      console.log(activeIndex);
-      console.log('TWO');
-      for(let i = 0; i<tempCards.length;i++){
-        console.log(tempCards[i].name);
-      }
-      return tempCards.slice(this.state.cards.findIndex(card => card.isActive)-1,this.state.cards.findIndex(card => card.isActive)+2).reverse().map((card, index) => {
-            return <Card id={card.id}   {...card} navigate={this.props.navigation} data ={card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} handleFavoriteSelect={this.handleFavoriteSelect} handleBlockSelect={this.handleBlockSelect} />;
-          });
-
-    }
-
-
-
-
-
-
-
-  }
-
-
-
-  isEmptyState = () => {
-    return this.state.cards.findIndex(card => card.isActive) < 0;
-  }
-  check = () => {
-    return this.state.cards.findIndex(card => card.isActive) == 2;
-  }
-
   renderHeader = () => (
     <View>
     <SwitchSelector
@@ -815,42 +537,24 @@ class Search extends Component {
       )
     }
   }
-  componentDidMount(){
-
-
-  }
   render() {
-
     return (
-      <View style={styles.container} >
-
-        <View style={styles.cardArea} >
-
-                {this.renderCards(this.state.cards)}
-
-          <View style={styles.btnContainer}>
-            <TouchableOpacity style={styles.btn} onPress={() => this.undoCard()} >
-              <IconC name="undo" size={35} style={{ color: 'orange' }} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.smallBtn} onPress={() => this.handleBlockSelect()} >
-              <IconB name="ban" size={15} style={{ color: 'black' }} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()} >
-              <IconB name="dislike" size={40} style={{ color: 'red' }} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()} >
-              <IconB name="like" size={40} style={{ color: 'green' }} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.smallBtn} onPress={() => this.handleFavoriteSelect()} >
-              <IconB name="heart" size={15} style={{ color: 'gold' }} />
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btn} onPress={() => this.handleFavoriteSelect()} >
-              <IconC name="playlist-play" size={35} style={{ color: 'black' }} />
-            </TouchableOpacity>
-
-          </View>
+      <View style={styles.container}>
+        {this.renderHeader()}
+        {this.renderFlatList()}
+        <View style={styles.footerContainer}>
+          {this.renderFooter()}
         </View>
-
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            shadowOpacity={0.5}
+            shadowRadius={10}
+            style={styles.button}
+            onPress={this.onSubmitPressed}
+          >
+            <Text style={[styles.font, { color: 'white' }]}>Search!</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
@@ -859,62 +563,7 @@ class Search extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'center',
     backgroundColor: 'white',
-    alignItems: 'stretch',
-  },
-  cardArea: {
-    flex: 1,
-    marginTop: 0,
-    height: SCREEN_HEIGHT*.7,
-    backgroundColor : "#0000",
-    shadowOffset: { width: 10, height: 10 },
-    shadowColor: 'black',
-    shadowOpacity: 1,
-    elevation: 3,
-
-  },
-  btnContainer: {
-    flex: 2,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: -1,
-    position: 'absolute',
-    alignSelf: 'center',
-    bottom: 7,
-
-  },
-  header: {
-    borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
-    borderBottomColor: colors.accent,
-    backgroundColor: colors.background,
-  },
-  btn: {
-    height: 70,
-    width: 70,
-    borderRadius: 35,
-    alignItems: 'center',
-
-    justifyContent: 'center',
-    marginHorizontal: 1,
-    backgroundColor: '#efefef',
-  },
-  smallBtn: {
-    height: 30,
-    width: 30,
-    alignSelf: 'flex-end',
-    borderRadius: 35,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginHorizontal: 0,
-    backgroundColor: '#efefef',
-
-  },
-  btnIcon: {
-    height: 25,
-    width: 25,
   },
   scroll: {
     backgroundColor: 'white',

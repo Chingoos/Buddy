@@ -21,7 +21,7 @@ export default class ListPhoto extends React.PureComponent {
                'Photo', {data: item, title: item.title}
             )}
           style={styles.listItem}>
-          <Image source={{uri: this.state.item.illustration}} style={styles.image} />
+          <Image source={{uri: this.state.item.image_url}} style={styles.image} />
       </TouchableOpacity>
     );
   }

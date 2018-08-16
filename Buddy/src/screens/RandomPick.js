@@ -86,9 +86,9 @@ export default class RandomPick extends Component {
             searchBar
           >
             <Item>
-              <IconC onPress={() => this.refresh()} name="refresh" color = 'black' size={20} style={{ paddingRight: 15 }} />
-              <Text   style={{ fontSize: 20, alignItems: 'center',  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
-              <Icon onPress={() => this.props.navigation.navigate('Search')} name="magnifier" size={20} style={{ position: 'absolute', right: 15 }} />
+              <IconC onPress={() => this.refresh()} name="refresh" color = 'black' size={25} style={{ paddingRight: 15 }} />
+              <Text  numberOfLines={1} style={{ fontSize: 20, alignItems: 'center',  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
+              <Icon onPress={() => this.props.navigation.navigate('Search')} name="magnifier" color = 'black'size={25} style={{ position: 'absolute', right: 10 }} />
             </Item>
           </Header>
 

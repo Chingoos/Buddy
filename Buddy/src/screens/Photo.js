@@ -37,7 +37,7 @@ export default class Photo extends Component {
           </Item>
         </Header>
         <View style={styles.imageContainer}>
-          <Image resizeMode={'contain'} source={{uri: this.state.data.illustration}} style={styles.image}/>
+          <Image resizeMode={'contain'} source={{uri: this.state.data.image_url}} style={styles.image}/>
         </View>
       </View>
     );

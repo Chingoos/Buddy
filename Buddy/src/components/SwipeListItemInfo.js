@@ -1,73 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 import {View, Text, StyleSheet, Animated, Dimensions, PanResponder, Platform, Image, TouchableOpacity,TouchableWithoutFeedback} from 'react-native';
-import SwipeListItemInfo from './SwipeListItemInfo'
 const {width} = Dimensions.get('window');
-import colors from '../styles/colors'
-export default class ListItem extends React.PureComponent {
-  constructor(props) {
+import colors from '../styles/colors';
+
+export default class SwipeListItemInfo extends Component {
+  constructor(props)
+  {
     super(props);
-
-    this.gestureDelay = -35;
-    this.scrollViewEnabled = true;
-
-    const position = new Animated.ValueXY();
-    const panResponder = PanResponder.create({
-      onStartShouldSetPanResponder: (evt, gestureState) => false,
-      onMoveShouldSetPanResponder: (evt, gestureState) => true,
-      onPanResponderTerminationRequest: (evt, gestureState) => false,
-      onPanResponderMove: (evt, gestureState) => {
-        if (gestureState.dx > 35) {
-          this.setScrollViewEnabled(false);
-          let newX = gestureState.dx + this.gestureDelay;
-          position.setValue({x: newX, y: 0});
-        }
-      },
-      onPanResponderRelease: (evt, gestureState) => {
-        if (gestureState.dx < 150) {
-          Animated.timing(this.state.position, {
-            toValue: {x: 0, y: 0},
-            duration: 150,
-          }).start(() => {
-            this.setScrollViewEnabled(true);
-          });
-        } else {
-          Animated.timing(this.state.position, {
-            toValue: {x: width, y: 0},
-            duration: 300,
-          }).start(() => {
-            this.props.success(this.props.text);
-            this.setScrollViewEnabled(true);
-          });
-        }
-      },
-    });
-
-    this.panResponder = panResponder;
-    this.state = {position};
   }
-
-  setScrollViewEnabled(enabled) {
-    if (this.scrollViewEnabled !== enabled) {
-      this.props.setScrollEnabled(enabled);
-      this.scrollViewEnabled = enabled;
-    }
-  }
-
 
   render() {
     return (
+      <TouchableOpacity onPress={() => this.props.navigate.navigate(
+               'Business', {data: this.props.data, title: this.props.data.name}
+            )}>
+      <View style={styles.row}>
 
-      <View style={styles.listItem} >
-        <Animated.View style={[this.state.position.getLayout()]} {...this.panResponder.panHandlers}>
-          <View style={styles.absoluteCell}>
-            <Text style={styles.absoluteCellText}>DELETE</Text>
+        <Image source={{uri: this.props.data.image_url}} style={styles.image} />
+
+        <View style = {styles.textContainer}>
+          <Text numberOfLines={1} style={styles.title}> {this.props.data.name} </Text>
+          <View style={{flexDirection: 'row',}}>
+
+            <Text style={styles.category}> {this.props.data.categories[0].title} </Text>
+            <View style={{right: 0, position: "absolute"}}>
+              <Text style={styles.category}> {this.props.data.price} </Text>
+            </View>
           </View>
+          <View style={{flexDirection: 'row',}}>
 
-          <SwipeListItemInfo navigate = {this.props.navigate} data={this.props.data}/>
+            <Text style={styles.category}> {this.props.data.distance} </Text>
+            <View style={{right: 0, position: "absolute"}}>
 
-        </Animated.View>
+                <Text style={styles.category}> {this.props.data.rating} </Text>
+
+            </View>
+          </View>
+        </View>
       </View>
-
+        </TouchableOpacity >
     );
   }
 }

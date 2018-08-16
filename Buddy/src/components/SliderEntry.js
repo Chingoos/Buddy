@@ -5,7 +5,12 @@ import { ParallaxImage } from 'react-native-snap-carousel';
 import styles from '../styles/sliderStyle';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
 export default class SliderEntry extends Component {
-
+    constructor(props){
+      super(props);
+      this.state={
+        category: props.data.categories[0].title,
+      };
+    }
     static propTypes = {
         data: PropTypes.object.isRequired,
         even: PropTypes.bool,
@@ -14,11 +19,11 @@ export default class SliderEntry extends Component {
     };
 
     get image () {
-        const { data: { illustration }, parallax, parallaxProps, even } = this.props;
+        const { data: { image_url }, parallax, parallaxProps, even } = this.props;
 
         return parallax ? (
             <ParallaxImage
-              source={{ uri: illustration }}
+              source={{ uri: image_url }}
               containerStyle={[styles.imageContainer, even ? styles.imageContainerEven : {}]}
               style={styles.image}
               parallaxFactor={0.35}
@@ -28,21 +33,21 @@ export default class SliderEntry extends Component {
             />
         ) : (
             <Image
-              source={{ uri: illustration }}
+              source={{ uri: image_url }}
               style={styles.image}
             />
         );
     }
 
     render () {
-        const { data: { title, category, review, price, distance }, even } = this.props;
-
-        const uppercaseTitle = title ? (
+        const { data: { name, categories, rating, price, distance }, even } = this.props;
+        console.log(this.state.category);
+        const uppercaseTitle = name ? (
             <Text
               style={styles.title}
               numberOfLines={2}
             >
-                { title.toUpperCase() }
+                { name.toUpperCase() }
             </Text>
         ) : false;
 
@@ -50,7 +55,7 @@ export default class SliderEntry extends Component {
             <TouchableOpacity
               activeOpacity={1}
               style={styles.slideInnerContainer}
-              onPress={() => { alert(`You've clicked '${title}'`); }}
+              onPress={() => { alert(`You've clicked '${name}'`); }}
               >
                 <View style={styles.shadow} />
                 <View style={styles.imageContainer}>
@@ -78,7 +83,7 @@ export default class SliderEntry extends Component {
                     { uppercaseTitle }
                     <View style={{flexDirection:'row'}}>
                       <Text style={styles.etc} >
-                          { category }
+                          { this.state.category }
                       </Text>
                       <View style={{right: 0, position: "absolute"}}>
                         <Text style={styles.others}> { price} </Text>
@@ -87,7 +92,7 @@ export default class SliderEntry extends Component {
                     <View style ={{flexDirection: 'row', marginTop: 3}}>
                       <Text style={styles.others}> { distance } </Text>
                       <View style={{right: 0, position: "absolute"}}>
-                        <Text style={styles.review}> { review } </Text>
+                        <Text style={styles.review}> { rating } </Text>
                       </View>
 
                     </View>

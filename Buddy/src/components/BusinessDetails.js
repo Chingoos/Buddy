@@ -38,7 +38,7 @@ export default class BusinessDetails extends Component {
         <View style={styles.businessCard}>
           <Image style={styles.cardImg} source={{uri: this.state.image}}/>
           <View style = {styles.textContainer}>
-            <Text style={styles.title}> {this.state.title} </Text>
+          
             <View style={{flexDirection: 'row',}}>
 
               <Text style={styles.category}> {this.state.category} </Text>

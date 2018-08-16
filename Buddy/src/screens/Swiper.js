@@ -8,11 +8,13 @@ import {
   Dimensions,
   Image,
   TouchableHighlight,
-  Platform
+  Platform,
+  TouchableWithoutFeedback
 } from 'react-native';
 import { Header, Item, Input } from 'native-base';
 import IconB from 'react-native-vector-icons/dist/SimpleLineIcons';
 import Icon from 'react-native-vector-icons/dist/FontAwesome';
+import IconC from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import colors from '../styles/colors';
 import Card from "../components/Card";
 import img1 from '../assets/images/image1.jpeg';
@@ -122,7 +124,7 @@ export default class Swiper extends React.Component {
 
     if (this.isEmptyState()) {this.filterCards(); }
     return cards.map((card, index) => {
-      return <Card id={card.id} {...card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
+      return <Card id={card.id} {...card} navigate={this.props.navigation} data ={card} handleNopeSelect={this.handleNopeSelect} handleLikeSelect={this.handleLikeSelect} />;
     }).reverse();
 
 
@@ -151,19 +153,21 @@ export default class Swiper extends React.Component {
           searchBar
         >
           <Item>
-            
+
             <Text   style={{ fontSize: 20,  color: 'black', fontFamily: 'GothamRounded-Medium' }}> {this.state.title} </Text>
-            <Icon onPress={() => this.filterCards()} name="list" size={20} style={{ position: 'absolute', right: 15 }} />
+            <IconC onPress={() => this.filterCards()} name="format-list-bulleted" size={25} color='black' style={{ position: 'absolute', right: 10 }} />
           </Item>
         </Header>
         <View style={styles.cardArea} >
-          {this.renderCards(this.state.cards)}
+
+                {this.renderCards(this.state.cards)}
+
           <View style={styles.btnContainer}>
             <TouchableOpacity style={styles.btn} onPress={() => this.handleNopeSelect()} >
-              <Icon name="times" size={32} style={{ color: 'red' }} />
+              <IconB name="dislike" size={32} style={{ color: 'red' }} />
             </TouchableOpacity>
             <TouchableOpacity style={styles.btn} onPress={() => this.handleLikeSelect()} >
-              <Icon name="check" size={32} style={{ color: 'green' }} />
+              <IconB name="like" size={32} style={{ color: 'green' }} />
             </TouchableOpacity>
 
           </View>
@@ -201,7 +205,7 @@ const styles = StyleSheet.create({
     zIndex: -1,
     position: 'absolute',
     alignSelf: 'center',
-    bottom: 30,
+    bottom: 0,
 
   },
   header: {
@@ -215,7 +219,7 @@ const styles = StyleSheet.create({
     borderRadius: 35,
     alignItems: 'center',
     justifyContent: 'center',
-    marginHorizontal: 15,
+    marginHorizontal: 10,
     backgroundColor: '#efefef',
   },
   btnIcon: {

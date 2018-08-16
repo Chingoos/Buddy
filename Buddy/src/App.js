@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/SimpleLineIcons';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import configureStore from './store/store';
-import { Search, Home, Profile, Login } from './screens';
+import {Search, Home, Profile, Login } from './screens';
 import SignUp from './screens/SignUp';
 import Calendar from './screens/Calendar';
 import SearchList from './screens/SearchList';
@@ -21,6 +21,7 @@ import BusinessSearch from './screens/BusinessSearch'
 import Business from './screens/Business'
 import Photo from './screens/Photo'
 import Review from './screens/Review'
+
 
 const { store, persistor } = configureStore();
 
@@ -66,12 +67,6 @@ const SearchStack = createStackNavigator({
       header: null,
     }),
   },
-  Swiper: {
-    screen: Swiper,
-    navigationOptions: () => ({
-      header: null,
-    }),
-  },
   SearchList: {
     screen: SearchList,
     navigationOptions: () => ({
@@ -82,6 +77,11 @@ const SearchStack = createStackNavigator({
     screen: RandomPick,
     navigationOptions: () => ({
       header: null,
+    }),
+  },
+  Business:  { screen: Business,
+     navigationOptions: () => ({
+       header: null
     }),
   },
 });
@@ -110,10 +110,9 @@ const ProfileStack = createStackNavigator({
 });
 const AppNavigation = createMaterialBottomTabNavigator(
   {
-    Home: { screen: HomeStack },
     Search: { screen: SearchStack },
+    Home : { screen: HomeStack },
     Login: { screen: LoginStack },
-    Calendar: {screen: Calendar},
     Profile: { screen: ProfileStack },
   },
   {
@@ -121,9 +120,9 @@ const AppNavigation = createMaterialBottomTabNavigator(
       tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
-        if (routeName === 'Home') {
+        if (routeName === 'Search') {
           iconName = `ghost`;
-        } else if (routeName === 'Search') {
+        } else if (routeName === 'Home') {
           iconName = `magnifier`;
         } else if (routeName === 'Profile') {
           iconName = `user`;
@@ -138,7 +137,7 @@ const AppNavigation = createMaterialBottomTabNavigator(
       },
     }),
     labeled: false,
-    initialRouteName: 'Login',
+    initialRouteName: 'Search',
     activeTintColor: 'black',
     inactiveTintColor: 'grey',
     barStyle: { backgroundColor: 'white' },

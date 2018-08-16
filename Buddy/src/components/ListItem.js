@@ -18,27 +18,25 @@ export default class ListItem extends React.PureComponent {
 
     return (
       <TouchableOpacity onPress={() => this.props.navigation.navigate(
-               'Business', {data: item, title: item.title}
+               'Business', {data: item, title: item.name}
             )}
           style={styles.listItem}>
-          <View style={styles.absoluteCell}>
-            <Text style={styles.absoluteCellText}>DELETE</Text>
-          </View>
+
           <View style={styles.row}>
-            <Image source={{uri: this.state.item.illustration}} style={styles.image} />
+            <Image source={{uri: this.state.item.image_url}} style={styles.image} />
             <View style = {styles.textContainer}>
-              <Text style={styles.title}> {this.state.item.title} </Text>
+              <Text style={styles.title}> {this.state.item.name} </Text>
               <View style={{flexDirection: 'row',}}>
-              <Text style={styles.category}> {this.state.item.category} </Text>
+              <Text style={styles.category}> {this.state.item.categories[0].title} </Text>
               <View style={{right: 0, position: "absolute"}}>
                 <Text style={styles.category}> {this.state.item.price} </Text>
               </View>
             </View>
             <View style={{flexDirection: 'row',}}>
 
-              <Text style={styles.category}> {this.state.item.distance} </Text>
+              <Text style={styles.category}> {Math.round(this.state.item.distance*0.000621371*100)/100 } </Text>
               <View style={{right: 0, position: "absolute"}}>
-                <Text style={styles.category}> {this.state.item.review} </Text>
+                <Text style={styles.category}> {this.state.item.rating} </Text>
               </View>
             </View>
           </View>

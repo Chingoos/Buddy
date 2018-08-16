@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {FlatList, StyleSheet, View, Platform, TouchableOpacity, Text} from 'react-native';
 import ListItem from '../components/SwipeListItem';
 import Icon from 'react-native-vector-icons/dist/FontAwesome'
+import IconB from 'react-native-vector-icons/dist/SimpleLineIcons';
 import colors from '../styles/colors';
 export default class SwipeableList extends Component {
   constructor(props) {
@@ -141,6 +142,8 @@ export default class SwipeableList extends Component {
         image={item.image_url}
         success={this.success}
         text={item.key}
+        data={item}
+        navigate={this.props.navigation}
         setScrollEnabled={enable => this.setScrollEnabled(enable)}
       />
     );
@@ -151,7 +154,9 @@ export default class SwipeableList extends Component {
   render() {
     return (
       <View style={styles.container}>
+
         <View style={styles.header}>
+          <IconB onPress={() => this.props.navigation.goBack()} name="arrow-left" size={27} color={'black'} />
           <TouchableOpacity
             shadowOpacity={0.5}
             shadowRadius={10}
@@ -184,9 +189,10 @@ export default class SwipeableList extends Component {
           >
             <Text style={styles.font}>Review</Text>
           </TouchableOpacity>
-          <Icon onPress={() => this.props.navigation.navigate('RandomPick', {data: this.state.data})} name="question-square" size={20} color={'black'} style={{ position: 'absolute', right: 15, pddingTop:10 }} />
+          <Icon onPress={() => this.props.navigation.navigate('RandomPick', {data: this.state.data})} name="dice-six" size={27} color={'black'} style={{ position: 'absolute', right: 15, paddingTop:10 }} />
         </View>
         <FlatList
+          keyExtractor={this.state.data.id}
           style={this.props.style}
           data={this.state.data}
           extraData={this.state}
@@ -226,9 +232,11 @@ row: {
     fontFamily: 'GothamRounded-Medium'
   },
   header:{
+    height: 55,
     borderBottomWidth: Platform.OS !== 'ios' ? 2 : 1,
     borderBottomColor: colors.accent,
     backgroundColor: colors.background,
-    flexDirection: 'row', paddingLeft: 10
+    flexDirection: 'row', paddingLeft: 10,
+    alignItems: 'center'
   }
 });
